@@ -1,5 +1,7 @@
 /build
 /lib
+
+# Maybe we should include this?
 /WebContent
 
 *.class
