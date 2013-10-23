@@ -1,3 +1,7 @@
+/build
+/lib
+/WebContent
+
 *.class
 
 # Package Files #
