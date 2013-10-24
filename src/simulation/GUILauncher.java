@@ -1,5 +1,8 @@
 package simulation;
 
+import org.rosuda.JRI.Rengine;
+
+
 public class GUILauncher {
 	/**
 	 * @param args
@@ -10,4 +13,8 @@ public class GUILauncher {
 		// Create the GUI.
 		new BigMarketSimulationGUI(simulation);		
 	}
+	
+	
+	
+
 }

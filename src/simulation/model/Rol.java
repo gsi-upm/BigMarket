@@ -1,5 +1,9 @@
 package simulation.model;
 
+import java.util.List;
+
+import simulation.model.node.User;
+
 
 /**
  * This class represent the rol that a user can assume
@@ -11,31 +15,65 @@ package simulation.model;
  */
 public class Rol {
 
-	private boolean friend;
+	private List<User> friends;
 	private boolean informationSeeker;
 	private boolean informationProducer;
+
 	
 	private String name;
 	
-	public Rol(String name, boolean friend, boolean seeker, boolean producer){
+	public Rol(String name, List<User> friend, boolean seeker, boolean producer){
 		this.setName(name);
-		this.setFriend(friend);
+		this.setFriends(friend);
 		this.setInformationProducer(producer);
 		this.setInformationSeeker(seeker);
 	}
 
 	/**
-	 * @return the friend
+	 * @return the friends
 	 */
-	public boolean isFriend() {
-		return friend;
+	public List<User> getFriends() {
+		return friends;
 	}
 
 	/**
-	 * @param friend the friend to set
+	 * @param friend the list of friends to set
 	 */
-	public void setFriend(boolean friend) {
-		this.friend = friend;
+	public void setFriends(List<User> friend) {
+		this.friends = friend;
+	}
+	
+	/**
+	 * @param user a user to add as friend
+	 */
+	public void setFriend(User user){
+		this.friends.add(user);
+	}
+	
+	/**
+	 * @return friend a friend of the user
+	 * 
+	 */
+	public User getFriend(int index){
+		return this.friends.get(index);
+	}
+	
+	
+	/**
+	 * 
+	 * 
+	 * @param id of the user to get
+	 * @return the user
+	 */
+	public User getFriendByID(int id){
+		for(int i = 0; i < this.getFriends().size(); i++){
+			if(this.getFriend(i).getId() == id){
+				return this.getFriend(i);
+			}
+		}
+		
+		return null;
+		
 	}
 
 	/**
