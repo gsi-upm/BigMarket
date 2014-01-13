@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">	
+<title>BigMarket</title>
+</head>
+
+<body>
+<h1>Please fill the following form</h1>
+<form name="SimParameters" method="POST" 
+		action="BigMarketServlet">
+	<p>Will you use Twitter dataset?</p>
+	<input type="radio" name="datasetUsed" value="Yes">Yes
+	<input type="radio" name="datasetUsed" value="No">No
+	<p>Dataset: <input type="text" name="datasetPath" disabled="disabled"></p>
+	<p>Do you want to run the Simulation with GUI?
+	<input type="radio" name="wannaGUI" value="Yes">Yes
+	<input type="radio" name="wannaGUI" value="No">No
+	<p>Number of initial nodes: <input type="text" name="initialNodes"></p>
+	<p><input type="submit" value="Start Simulation"></p>
+</form> 
+
+		<input type="button" name="StopButton" value="Stop">
+
+		<input type="button" name="PauseButton" value="Pause">
+
+		<input type="button" name="PlayButton" value="Play">
+
+
+
+</body>
+
+</html>
