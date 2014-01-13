@@ -1,4 +1,0 @@
-Resultados de la simulación:
-Number of alive: 4872
-Number of deaths: 5128
-Number of steps: 10000
