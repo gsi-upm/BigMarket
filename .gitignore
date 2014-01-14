@@ -1,4 +1,4 @@
-.project
+
 .classpath
 build/
 .metadata
@@ -8,3 +8,4 @@ build.xml
 readme.md
 manifest.md
 manifest.mf
+RemoteSystemsTempFiles/
