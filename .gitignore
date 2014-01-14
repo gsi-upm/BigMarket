@@ -1,8 +1,5 @@
 
-.classpath
 build/
-.metadata
-.settings
 nbproject/
 build.xml
 readme.md
