@@ -9,3 +9,5 @@ Now you have all the necessary tools to run, study and change BigMarket
 -Right click on index.html (WebContent>index.html)>Run as> Run on server
 -Select Choose an existing server (created in the previously)
 -Finish
+
+For de
