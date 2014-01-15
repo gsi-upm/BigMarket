@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
 import simulation.Simulation;
@@ -11,6 +12,7 @@ import simulation.model.User;
 import simulation.model.UserModel;
 import simulation.model.event.Follow;
 import simulation.model.event.Tweet;
+import simulation.util.Constants;
 import simulation.util.Statistics;
 
 public class RandomBehaviour extends UserModel{
@@ -80,13 +82,35 @@ public class RandomBehaviour extends UserModel{
 			}
 		}
 	}
+	
+	private void setUserType(Simulation sim, User user){
+		Graph graph = sim.getGraphManager().getGraph();
+		double enteredEdges = 0.0;
+		double totalEdges = graph.getEdgeCount();
+		System.out.println("TOTAL EDGES " + totalEdges);
+		double percentage = 0.0;
+		enteredEdges = user.getFollowers().size();
+		percentage = enteredEdges/totalEdges;
+			if(percentage >= 0.00275){
+				user.setType(Constants.USER_TYPE_BROADCASTER);
+				System.out.println("User " + user.getUserName() + " broadcaster");
+			}else if(0.00275 > percentage &&  percentage >= 0.000121){
+				user.setType(Constants.USER_TYPE_ACQUAINTANCES);
+				logger.info("User " + user.getUserName() + " aquaintance");
+			}else{
+				user.setType(Constants.USER_TYPE_ODDUSERS);
+				logger.info("User " + user.getUserName() + " odd user");
+			}
+	}
 
 	@Override
-	public void userBehaviour(Simulation sim) {
+	public void userBehaviour(Simulation sim, User user) {
 		generateRandomTweet(sim);
 		generateRandomFollows(sim);
+		setUserType(sim, user);
 	}
 	
+
 	
 
 

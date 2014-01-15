@@ -1,5 +1,5 @@
+.claspath
 .project
-.metadata/
 .settings/
 build/
 nbproject/
@@ -9,3 +9,4 @@ manifest.md
 manifest.mf
 RemoteSystemsTempFiles/
 /dist/
+/bin

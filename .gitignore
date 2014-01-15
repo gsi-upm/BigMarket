@@ -1,4 +1,6 @@
-
+.classpath
+.project
+.settings/
 build/
 nbproject/
 build.xml
@@ -7,3 +9,4 @@ manifest.md
 manifest.mf
 RemoteSystemsTempFiles/
 /dist/
+/bin

@@ -73,6 +73,8 @@ public class User implements Steppable{
 	private List<User> inList;
 	private List<Tweet> timeline;
 	private String type;
+	private UserModel random;
+
 	 
 	
 	
@@ -89,6 +91,8 @@ public class User implements Steppable{
 		this.setUserName(userName);
 		this.followed = new ArrayList<User>();
 		this.followers = new ArrayList<User>();
+		this.random = new RandomBehaviour("RandomBehaviour");
+
 	}
 	
 	/**
@@ -138,9 +142,7 @@ public class User implements Steppable{
 	@Override
 	public void step(SimState sim) {
 		Simulation simulation = (Simulation) sim;
-		UserModel random = new RandomBehaviour("RandomBehaviour");
-		random.userBehaviour(simulation);
-		
+		random.userBehaviour(simulation, this);
 	}
 	
 	/**

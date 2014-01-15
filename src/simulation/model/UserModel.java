@@ -10,7 +10,7 @@ public abstract class UserModel {
 		this.name = name;
 	}
 	
-	public abstract void userBehaviour(Simulation sim);
+	public abstract void userBehaviour(Simulation sim, User user);
 	
 	public String getName(){
 		return this.name;

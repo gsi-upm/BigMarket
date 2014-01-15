@@ -59,6 +59,7 @@ public class BigMarketServlet extends HttpServlet {
 		}else{
 			launcher.launchWithoutGUI(sim);
 		}
+		
 		numberOfTweets = sim.getEventManager().getStatistics().getTotalNumberOfTweets();
 	}
 	

@@ -111,7 +111,7 @@ public class Simulation extends SimState{
 			}
 			graphManager.runGraphManagerWithoutDataSets(statistics);
 		}else{
-			eventManager.loadRandomEvents(25, null);
+			eventManager.loadRandomEvents(100, null);
 			graphManager.runGraphManagerWithoutDataSets(statistics);
 		}
 		
@@ -123,7 +123,7 @@ public class Simulation extends SimState{
 			this.schedule.scheduleRepeating(u, 0, 1);
 		}
 
-		this.schedule.scheduleRepeating(eventManager, 1, 1);
+		//this.schedule.scheduleRepeating(eventManager, 1, 1);
 		
 		
 	}
