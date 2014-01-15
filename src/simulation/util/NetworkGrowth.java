@@ -46,14 +46,14 @@ public class NetworkGrowth implements Steppable{
 		this.newPopulation = population;
 		
 		createNewUsers(simulation);
-		connectNewUsers(simulation);
+		//connectNewUsers(simulation);
 	}
 	
 	public void createNewUsers(Simulation sim){
 		Graph graph = graphManager.getGraph();
 		int diference = newPopulation - lastPopulation;
 		for(int i = 0; i < diference; i++){
-			graph.addNode(""+i+lastPopulation);	
+			graph.addNode(Integer.toString(i+lastPopulation));	
 			logger.info("Node " + (i+lastPopulation) + " added");
 			User u = new User((i+lastPopulation), "id " + (i+lastPopulation),
 					"User " + (i+lastPopulation));

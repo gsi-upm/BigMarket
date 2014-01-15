@@ -161,13 +161,14 @@ public class GraphManager {
 		Generator gen = new BarabasiAlbertGenerator(1);
 		gen.addSink(graph);
 		gen.begin();
-		for(int i=0; i<numberOfAgents; i++) {
+		for(int i=1; i<numberOfAgents-1; i++) {
 		    gen.nextEvents();
 		}
 		gen.end();
 		for(int n = 0; n < graph.getNodeCount(); n++){
 			Node node = graph.getNode(n);
 			finalGraph.addNode(node.getId());
+			logger.info("Node " + node.getId() + " added");
 			User user = new User(n, "id" + n, "User" + n);
 		    sim.addUser(user);
 			

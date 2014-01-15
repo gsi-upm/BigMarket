@@ -18,7 +18,9 @@ import simulation.util.Statistics;
 public class RandomBehaviour extends UserModel{
 	
 	private Logger logger = Logger.getLogger(this.getClass().getName());
-
+	public int broadcasters = 0;
+	public int acq = 0;
+	public int odd = 0;
 	public RandomBehaviour(String name) {
 		super(name);
 		
@@ -87,19 +89,15 @@ public class RandomBehaviour extends UserModel{
 		Graph graph = sim.getGraphManager().getGraph();
 		double enteredEdges = 0.0;
 		double totalEdges = graph.getEdgeCount();
-		System.out.println("TOTAL EDGES " + totalEdges);
 		double percentage = 0.0;
 		enteredEdges = user.getFollowers().size();
 		percentage = enteredEdges/totalEdges;
 			if(percentage >= 0.00275){
 				user.setType(Constants.USER_TYPE_BROADCASTER);
-				System.out.println("User " + user.getUserName() + " broadcaster");
 			}else if(0.00275 > percentage &&  percentage >= 0.000121){
 				user.setType(Constants.USER_TYPE_ACQUAINTANCES);
-				logger.info("User " + user.getUserName() + " aquaintance");
 			}else{
 				user.setType(Constants.USER_TYPE_ODDUSERS);
-				logger.info("User " + user.getUserName() + " odd user");
 			}
 	}
 
@@ -110,8 +108,4 @@ public class RandomBehaviour extends UserModel{
 		setUserType(sim, user);
 	}
 	
-
-	
-
-
 }

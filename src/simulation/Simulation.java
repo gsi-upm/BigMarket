@@ -111,13 +111,13 @@ public class Simulation extends SimState{
 			}
 			graphManager.runGraphManagerWithoutDataSets(statistics);
 		}else{
-			eventManager.loadRandomEvents(100, null);
+			eventManager.loadRandomEvents(20, null);
 			graphManager.runGraphManagerWithoutDataSets(statistics);
 		}
 		
 		
-//		this.networkGrowth = new NetworkGrowth(this, this.graphManager);
-//		this.schedule.scheduleRepeating(networkGrowth, 1, 1);
+		this.networkGrowth = new NetworkGrowth(this, this.graphManager);
+		this.schedule.scheduleRepeating(networkGrowth, 1, 1);
 		
 		for(User u : this.getUsers()){
 			this.schedule.scheduleRepeating(u, 0, 1);
