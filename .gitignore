@@ -1,6 +1,4 @@
-.project
-.metadata/
-.settings/
+
 build/
 nbproject/
 build.xml

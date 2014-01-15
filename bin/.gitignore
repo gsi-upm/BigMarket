@@ -1,0 +1,11 @@
+.project
+.metadata/
+.settings/
+build/
+nbproject/
+build.xml
+readme.md
+manifest.md
+manifest.mf
+RemoteSystemsTempFiles/
+/dist/
