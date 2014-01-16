@@ -124,7 +124,7 @@ public class Simulation extends SimState{
 			this.schedule.scheduleRepeating(u, 0, 1);
 		}
 
-		//this.schedule.scheduleRepeating(eventManager, 1, 1);
+		this.schedule.scheduleRepeating(eventManager, 1, 1);
 		
 		
 	}

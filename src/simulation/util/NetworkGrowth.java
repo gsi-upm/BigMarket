@@ -67,7 +67,7 @@ public class NetworkGrowth implements Steppable{
 		int diference = newPopulation - lastPopulation;
 		for(int i = 0; i < diference; i++){
 			graph.addNode(Integer.toString(i+lastPopulation));	
-			logger.info("Node " + (i+lastPopulation) + " added");
+			//logger.info("Node " + (i+lastPopulation) + " added");
 			User u = new User((i+lastPopulation), "id " + (i+lastPopulation),
 					"User " + (i+lastPopulation));
 			sim.addUser(u);			
@@ -87,7 +87,6 @@ public class NetworkGrowth implements Steppable{
 		Graph graph = sim.getGraphManager().getGraph();
 		for(User u: sim.getUsers()){
 			if(u.getFollowed().size() == 0 && u.getFollowers().size() == 0){
-				System.out.println("AAASASS " + u.getId());
 				Node n2 = graph.getNode(u.getId());
 				int random = (int) (Math.random()*popularity.size());
 				Node n1 = graph.getNode(popularity.get(random));
