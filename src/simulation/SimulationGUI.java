@@ -198,5 +198,10 @@ public class SimulationGUI extends GUIState{
 			console.pressStop();
 		}
 	}
+	
+	public static void main(String[]args){
+		Simulation simulation = new Simulation(System.currentTimeMillis());
+		new SimulationGUI(simulation);
+	}
 
 }

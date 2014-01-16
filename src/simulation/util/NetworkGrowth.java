@@ -1,10 +1,9 @@
 package simulation.util;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
-import org.graphstream.algorithm.generator.BarabasiAlbertGenerator;
-import org.graphstream.algorithm.generator.Generator;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
@@ -12,6 +11,7 @@ import sim.engine.SimState;
 import sim.engine.Steppable;
 import simulation.Simulation;
 import simulation.model.User;
+import simulation.model.event.Follow;
 
 public class NetworkGrowth implements Steppable{
 	
@@ -22,17 +22,20 @@ public class NetworkGrowth implements Steppable{
 	private int newPopulation;
 	private int lastPopulation;
 	private GraphManager graphManager;
+	private List<Integer> popularity;
 
 	
 	public NetworkGrowth(Simulation sim, GraphManager graphManager){
 		this.graphManager = graphManager;
 		this.population = sim.getEventManager().getNumberOfAgents();
+		this.popularity = new ArrayList<Integer>();
 
 	}
 	
 	@Override
 	public void step(SimState sim) {
 		Simulation simulation = (Simulation) sim;
+		fillPopularityList(simulation);
 		this.initialPopulation = simulation.getEventManager().getNumberOfAgents();
 		this.lastPopulation = population;
 		long t = simulation.schedule.getSteps();
@@ -46,8 +49,18 @@ public class NetworkGrowth implements Steppable{
 		this.newPopulation = population;
 		
 		createNewUsers(simulation);
-		//connectNewUsers(simulation);
+		lookForNewUsers(simulation);
 	}
+	
+	private void fillPopularityList(Simulation sim){
+		popularity.clear();
+		for(User u : sim.getUsers()){
+			for(int i = 0; i < u.getFollowers().size(); i++){
+				popularity.add(u.getId());
+			}
+		}
+	}
+	
 	
 	public void createNewUsers(Simulation sim){
 		Graph graph = graphManager.getGraph();
@@ -57,44 +70,31 @@ public class NetworkGrowth implements Steppable{
 			logger.info("Node " + (i+lastPopulation) + " added");
 			User u = new User((i+lastPopulation), "id " + (i+lastPopulation),
 					"User " + (i+lastPopulation));
-			sim.addUser(u);
-			
-			
-//			for(int j = 0; j<graph.getNodeCount(); j++){
-//				Node node = graph.getNode(j+lastPopulation);
-//				double edgeNumber = graph.getEdgeCount();
-//				System.out.println("EDGE COUNT " + edgeNumber);
-//				Node target = graph.getNode(j);
-//				System.out.println("TARGET " + target.getId());
-//				double edges = sim.getUsers().get(j).getFollowers().size();
-//				System.out.println("EDGES " + edges);
-//				double prob = (edges/edgeNumber) + 0.1;
-//				System.out.println("NODE " + node.getId() + " prob= " + prob);
-//				probs.add(prob);
-////					graph.addEdge("Edge" + node.getId() + "-->" + target.getId(), 
-////							target, node, true);	
-//			}
-//			System.out.println("VECTOR SIZE " + probs.size());
+			sim.addUser(u);			
+
 		}
 		
 	}
 	
-	public void connectNewUsers(Simulation sim){
-		Vector<Node> oldNodes = new Vector<Node>(); 
-		Vector<Node> newNodes = new Vector<Node>();
-		Graph graph = graphManager.getGraph();
-		for(int i = 0; i < graph.getNodeCount(); i++){
-			Node n = graph.getNode(i);
-			if(n.getDegree() == 0){
-				newNodes.add(n);
-			}else{
-				oldNodes.add(n);
+	public void connectNewUsers(Simulation sim, Node n1, Node n2){
+		Graph graph = sim.getGraphManager().getGraph();
+		graph.addEdge(Integer.toString(graph.getEdgeCount()+1), n2, n1, true);
+		Follow f = new Follow("Follow " + graph.getEdgeCount()+1, "TS " + graph.getEdgeCount()+1
+				, sim.getUsers().get(n1.getIndex()), sim.getUsers().get(n2.getIndex()));
+	}
+    
+	public void lookForNewUsers(Simulation sim){
+		Graph graph = sim.getGraphManager().getGraph();
+		for(User u: sim.getUsers()){
+			if(u.getFollowed().size() == 0 && u.getFollowers().size() == 0){
+				System.out.println("AAASASS " + u.getId());
+				Node n2 = graph.getNode(u.getId());
+				int random = (int) (Math.random()*popularity.size());
+				Node n1 = graph.getNode(popularity.get(random));
+				connectNewUsers(sim, n1, n2);
 			}
 		}
-		System.out.println("OLD NODES SIZE " + oldNodes.size());
-		System.out.println("NEW NODES SIZE " + newNodes.size());
 	}
-
 	
 	public void setPopulation(int pop){
 		this.population = pop;

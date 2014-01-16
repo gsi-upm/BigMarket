@@ -124,18 +124,19 @@ public class GraphManager {
 	 * This method create the graphic visualization of the graph
 	 */
 	public void createTheViewers(){
-		graph = new MultiGraph("");
-		finalGraph = new MultiGraph("Random Graph to test");
-		setStyleSheet();
-		this.setGui(sim.getGui());
-		Viewer viewer = finalGraph.display();
-		viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
-		DefaultView view = (DefaultView) viewer.getDefaultView();
-		view.getJFrame().setVisible(false);
-		gui.getNetworkFrame2D().setSize(750, 750);		
-		gui.getNetworkFrame2D().add(view);	
-		view.getJFrame().setVisible(false);
-		
+			graph = new MultiGraph("");
+			finalGraph = new MultiGraph("Random Graph to test");
+		if(sim.getGUIFLag() != 0){
+			setStyleSheet();
+			this.setGui(sim.getGui());
+			Viewer viewer = finalGraph.display();
+			viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.HIDE_ONLY);
+			DefaultView view = (DefaultView) viewer.getDefaultView();
+			view.getJFrame().setVisible(false);
+			gui.getNetworkFrame2D().setSize(750, 750);		
+			gui.getNetworkFrame2D().add(view);	
+			view.getJFrame().setVisible(false);
+		}
 	}
 	
 	/**

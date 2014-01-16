@@ -72,6 +72,7 @@ public class Simulation extends SimState{
 	private Statistics statistics;
 	private int numberOfNodes;
 	private int FLAG = 2;
+	private int GUIFLAG = 1;
 
 	/**
 	 * Main constructor of the class
@@ -209,6 +210,30 @@ public class Simulation extends SimState{
 	public void setFlag(int flag){
 		this.FLAG = flag;
 		
+	}
+	
+	public void setGUIFlag(int flag){
+		this.GUIFLAG = flag;
+	}
+	
+	public int getGUIFLag(){
+		return this.GUIFLAG;
+	}
+	
+	public static void main(String[]args){
+		Simulation simulation = new Simulation(System.currentTimeMillis());
+		simulation.setGUIFlag(0);
+		simulation.start();
+		long steps = 0;
+	    while(steps < 1000){
+	    	if (!simulation.schedule.step(simulation))
+	    		break;
+	    	steps = simulation.schedule.getSteps();
+	    	if (steps % 50 == 0)
+	    		System.out.println("Steps: " + steps + " Time: " + simulation.schedule.getTime());
+	    		
+	     	}
+	    simulation.finish();
 	}
 	
 	}
