@@ -39,5 +39,14 @@ from Eclipse in Help>Install new Software)
 -Select Choose an existing server
 -Finish
 
+Now eclipse will open a HTML page in which you can set the simulation parameters (actually to run the simulation properly you have to select this options):
+  -No Twitter Dataset
+  -Simulation with GUI
+  -In number of nodes you can put any number (take care because a high number can slow the simulation)
+  
+Click in start simulation and the program open a MASON simulation. Now the simulation is ready to run it and you can take two ways: 
+  -Connect it with Gephi: you have to open Gephi and open a new project, now in Streaming tab, right click on Master server and select Start and in the MASON main window go to Model tab and mark GephiFlag box. Now run the simulation
+  -Simply run the simulation: run the simulation. 
+
 
 
