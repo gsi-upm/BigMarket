@@ -110,13 +110,18 @@ public class GraphManager {
 	 */
 	public void runGraphManager(Statistics st){
 		createTheViewers();
-		//sendGraphToGephi(finalGraph);
+		if(sim.getGephiFlag()){
+			sendGraphToGephi(finalGraph);	
+		}
+		sendGraphToGephi(finalGraph);
 		createInitialNetwork();
 	}
 	
 	public void runGraphManagerWithoutDataSets(Statistics st){
 		createTheViewers();
-		//sendGraphToGephi(finalGraph);
+		if(sim.getGephiFlag()){
+			sendGraphToGephi(finalGraph);	
+		}
 		createScaleFreeNetwork(st);
 	}
 	

@@ -73,6 +73,7 @@ public class Simulation extends SimState{
 	private int numberOfNodes;
 	private int FLAG = 2;
 	private int GUIFLAG = 1;
+	private boolean gephiFlag;
 
 	/**
 	 * Main constructor of the class
@@ -82,6 +83,9 @@ public class Simulation extends SimState{
 	public Simulation(long seed) {
 		super(seed);
 		this.users = new ArrayList<>();
+		this.FLAG = 2;
+		this.GUIFLAG = 1;
+		this.gephiFlag = false;
 	}
 	
 	/**
@@ -112,7 +116,7 @@ public class Simulation extends SimState{
 			}
 			graphManager.runGraphManagerWithoutDataSets(statistics);
 		}else{
-			eventManager.loadRandomEvents(20, null);
+			eventManager.loadRandomEvents(25, null);
 			graphManager.runGraphManagerWithoutDataSets(statistics);
 		}
 		
@@ -192,6 +196,14 @@ public class Simulation extends SimState{
 	 */
 	public void setGui(SimulationGUI gui) {
 		this.gui = gui;
+	}
+	
+	public void setGephiFlag(boolean flag){
+		this.gephiFlag = flag;
+	}
+	
+	public boolean getGephiFlag(){
+		return this.gephiFlag;
 	}
 	
 	/**

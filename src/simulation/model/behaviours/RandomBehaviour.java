@@ -63,8 +63,8 @@ public class RandomBehaviour extends UserModel{
 	}
 	private void generateRandomFollows(Simulation sim){
 		int numberOfAgents = sim.getEventManager().getNumberOfAgents();
-		for(User u:sim.getUsers()){
-		}
+//		for(User u:sim.getUsers()){
+//		}
 		double prob = Math.random();
 		if(prob < 0.01){
 			int user1 = (int) (Math.random()*numberOfAgents);
