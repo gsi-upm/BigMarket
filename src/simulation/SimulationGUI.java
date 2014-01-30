@@ -46,6 +46,7 @@ import sim.display.Controller;
 import sim.display.Display2D;
 import sim.display.GUIState;
 import sim.engine.SimState;
+import simulation.util.Neo4JManageTool;
 
 /**
  * This class is used to create the gui of the simulation
@@ -202,6 +203,7 @@ public class SimulationGUI extends GUIState{
 	public static void main(String[]args){
 		Simulation simulation = new Simulation(System.currentTimeMillis());
 		new SimulationGUI(simulation);
+
 	}
 
 }

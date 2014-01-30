@@ -61,7 +61,7 @@ public class Launcher {
 	public void launchWithGUI(Simulation sim){
 		new SimulationGUI(sim);
 		long steps = 0;
-	    while(steps < 500){
+	    while(steps < 25){
 	    	steps = sim.schedule.getSteps();
 	    }
 	    sim.finish();

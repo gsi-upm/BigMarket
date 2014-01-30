@@ -2,12 +2,15 @@ package server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import simulation.Launcher;
 import simulation.Simulation;
+import simulation.util.Neo4JManageTool;
 
 /**
  * Servlet implementation class BigMarketServlet
@@ -61,6 +64,9 @@ public class BigMarketServlet extends HttpServlet {
 		}
 		
 		numberOfTweets = sim.getEventManager().getStatistics().getTotalNumberOfTweets();
+		Neo4JManageTool neoDB = new Neo4JManageTool();
+		neoDB.launchDatabaseTool();
+		System.out.println("Program finished");
 	}
 	
 	public void writeHTML(HttpServletResponse response) throws IOException{
