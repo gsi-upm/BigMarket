@@ -203,6 +203,13 @@ public class SimulationGUI extends GUIState{
 	public static void main(String[]args){
 		Simulation simulation = new Simulation(System.currentTimeMillis());
 		new SimulationGUI(simulation);
+		long steps = 0;
+		while(steps < 100){
+	    	if (!simulation.schedule.step(simulation))
+	    		break;
+	    	steps = simulation.schedule.getSteps();
+		}
+	    simulation.finish();
 
 	}
 

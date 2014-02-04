@@ -64,7 +64,8 @@ public class BigMarketServlet extends HttpServlet {
 		}
 		
 		numberOfTweets = sim.getEventManager().getStatistics().getTotalNumberOfTweets();
-		Neo4JManageTool neoDB = new Neo4JManageTool();
+		System.out.println("NUMERO FINAL DE USERS " + sim.getUsers().size());
+		Neo4JManageTool neoDB = new Neo4JManageTool(sim);
 		neoDB.launchDatabaseTool();
 		System.out.println("Program finished");
 	}

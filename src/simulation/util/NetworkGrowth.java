@@ -23,12 +23,18 @@ public class NetworkGrowth implements Steppable{
 	private int lastPopulation;
 	private GraphManager graphManager;
 	private List<Integer> popularity;
+	private int daysOrMonths;
+	private int variation;
+	private int lastVariation;
 
 	
 	public NetworkGrowth(Simulation sim, GraphManager graphManager){
 		this.graphManager = graphManager;
 		this.population = sim.getEventManager().getNumberOfAgents();
 		this.popularity = new ArrayList<Integer>();
+		this.daysOrMonths = 0;
+		this.variation = 0;
+		this.lastVariation = 0;
 
 	}
 	
@@ -44,12 +50,21 @@ public class NetworkGrowth implements Steppable{
 		double integralResult = (1565*r)/937;
 		double n = initialPopulation*Math.exp(integralResult);
 		int nt = (int) Math.round(n);
-		
+		variation = nt - lastPopulation;
+		if(variation == lastVariation){
+			this.changeToDays();
+		}
 		this.setPopulation(nt);
 		this.newPopulation = population;
+		this.lastVariation = variation;
 		
 		createNewUsers(simulation);
 		lookForNewUsers(simulation);
+		if(daysOrMonths == 0){
+			simulation.increaseMonths();
+		}else{
+			simulation.increaseDays();
+		}
 	}
 	
 	private void fillPopularityList(Simulation sim){
@@ -62,18 +77,19 @@ public class NetworkGrowth implements Steppable{
 	}
 	
 	
+	
 	public void createNewUsers(Simulation sim){
 		Graph graph = graphManager.getGraph();
 		int diference = newPopulation - lastPopulation;
 		for(int i = 0; i < diference; i++){
 			graph.addNode(Integer.toString(i+lastPopulation));	
-			//logger.info("Node " + (i+lastPopulation) + " added");
+			logger.info("Node " + (i+lastPopulation) + " added");
 			User u = new User((i+lastPopulation), "id " + (i+lastPopulation),
 					"User " + (i+lastPopulation));
 			sim.addUser(u);			
-
-		}
-		
+			sim.schedule.scheduleRepeating(u, 0, 1);
+			System.out.println("Se le ha asignado comportamiento al usuario " + u.getUserName());
+		}		
 	}
 	
 	public void connectNewUsers(Simulation sim, Node n1, Node n2){
@@ -95,6 +111,10 @@ public class NetworkGrowth implements Steppable{
 		}
 	}
 	
+	public void changeToDays(){
+		this.daysOrMonths = 1;
+	}
+	
 	public void setPopulation(int pop){
 		this.population = pop;
 	}
@@ -103,4 +123,7 @@ public class NetworkGrowth implements Steppable{
 		return this.population;
 	}
 	
+	public int getDaysOrMonths(){
+		return this.daysOrMonths;
+	}
 }

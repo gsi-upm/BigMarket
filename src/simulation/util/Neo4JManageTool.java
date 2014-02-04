@@ -13,17 +13,26 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.kernel.impl.util.FileUtils;
 
+import simulation.Simulation;
+import simulation.model.User;
+import simulation.model.event.Follow;
+
 
 
 public class Neo4JManageTool {
 	
-	public static final String DB_PATH = "/home/dlara/Neo4J195/data/graph.db/neostore";
+	public static final String DB_PATH = "/home/dlara/neo4j/data/graph.db";
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 	GraphDatabaseService graphDb;
     Node firstNode;
     Node secondNode;
     Relationship relationship;
-	
+    private Simulation sim;
+    
+	public Neo4JManageTool(Simulation sim){
+		this.sim = sim;
+	}
+    
 	private static enum RelTypes implements RelationshipType{
 	    FOLLOW
 	}
@@ -34,19 +43,30 @@ public class Neo4JManageTool {
         shutDown();
 	}
 	
+	
 	void createDb(){
 		clearDb();
 		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( DB_PATH );
 		registerShutdownHook( graphDb );
 
 		try ( Transaction tx = graphDb.beginTx() ){
-			firstNode = graphDb.createNode();
-			firstNode.setProperty( "message", "Hello, " );
-			secondNode = graphDb.createNode();
-			secondNode.setProperty( "message", "World!" );
+			for(User u : sim.getUsers()){
+				logger.info("Creating user " + u.getUserName());
+				Node nNeo = graphDb.createNode();
+				nNeo.setProperty("ID", u.getUserID());
+				nNeo.setProperty("Name", u.getUserName());
+				nNeo.setProperty("Type of user", u.getType());
+				logger.info("User " + u.getUserName() + " created");
+			}
 
-			relationship = firstNode.createRelationshipTo( secondNode, RelTypes.FOLLOW );
-			relationship.setProperty( "message", "brave Neo4j " );
+			for(User u : sim.getUsers()){
+				for(User user : u.getFollowed()){
+					Node origin = graphDb.getNodeById(u.getId());
+					Node target = graphDb.getNodeById(user.getId());
+					Relationship rel = origin.createRelationshipTo(target, RelTypes.FOLLOW);
+				}
+			}
+
 
 			tx.success();
 		}

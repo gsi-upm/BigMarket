@@ -40,6 +40,7 @@ along with TweetSim. If not, see <http://www.gnu.org/licenses/>
 */
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -71,9 +72,11 @@ public class Simulation extends SimState{
 	private NetworkGrowth networkGrowth;
 	private Statistics statistics;
 	private int numberOfNodes;
-	private int FLAG = 2;
-	private int GUIFLAG = 1;
+	private int FLAG;
+	private int GUIFLAG;
 	private boolean gephiFlag;
+	private int days;
+	private int months;
 
 	/**
 	 * Main constructor of the class
@@ -86,6 +89,8 @@ public class Simulation extends SimState{
 		this.FLAG = 2;
 		this.GUIFLAG = 1;
 		this.gephiFlag = false;
+		this.days = 0;
+		this.months = 0;
 	}
 	
 	/**
@@ -132,7 +137,18 @@ public class Simulation extends SimState{
 		
 		
 	}
-
+	
+	public void increaseDays(){
+		this.days++;
+		if(days >= 30){
+			days = 0;
+			months++;
+		}
+	}
+	
+	public void increaseMonths(){
+		this.months++;
+	}
 	
 	/**
 	 * Get the eventManager
@@ -230,6 +246,10 @@ public class Simulation extends SimState{
 	
 	public int getGUIFLag(){
 		return this.GUIFLAG;
+	}
+	
+	public String getDate(){
+		return "The simulation covers " + months + " months and " + days + " days";
 	}
 	
 	public static void main(String[]args){
