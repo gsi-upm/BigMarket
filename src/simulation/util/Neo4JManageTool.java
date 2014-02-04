@@ -55,7 +55,7 @@ public class Neo4JManageTool {
 				Node nNeo = graphDb.createNode();
 				nNeo.setProperty("ID", u.getUserID());
 				nNeo.setProperty("Name", u.getUserName());
-				nNeo.setProperty("Type of user", u.getType());
+				//nNeo.setProperty("Type of user", u.getType());
 				logger.info("User " + u.getUserName() + " created");
 			}
 
