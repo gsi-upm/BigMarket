@@ -6,27 +6,20 @@
 </head>
 
 <body>
-<h1>Please fill the following form</h1>
+<h1>BigMarket</h1>
+<h3>Configure the simulation</h3>
 <form name="SimParameters" method="POST" 
-		action="BigMarketServlet">
+		action="parameters.jsp">
 	<p>Will you use Twitter dataset?</p>
 	<input type="radio" name="datasetUsed" value="Yes">Yes
 	<input type="radio" name="datasetUsed" value="No">No
-	<p>Dataset: <input type="text" name="datasetPath" disabled="disabled"></p>
+	<p>Dataset: <input type="file" name="datasetPath"></p>
 	<p>Do you want to run the Simulation with GUI?
 	<input type="radio" name="wannaGUI" value="Yes">Yes
 	<input type="radio" name="wannaGUI" value="No">No
 	<p>Number of initial nodes: <input type="text" name="initialNodes"></p>
 	<p><input type="submit" value="Start Simulation"></p>
 </form> 
-
-		<input type="button" name="StopButton" value="Stop">
-
-		<input type="button" name="PauseButton" value="Pause">
-
-		<input type="button" name="PlayButton" value="Play">
-
-
 
 </body>
 
