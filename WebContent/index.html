@@ -1,26 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">	
-<title>BigMarket</title>
+	<meta charset="UTF-8">	
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<title>BigMarket</title>
 </head>
 
 <body>
-<h1>BigMarket</h1>
-<h3>Configure the simulation</h3>
-<form name="SimParameters" method="POST" 
-		action="parameters.jsp">
-	<p>Will you use Twitter dataset?</p>
-	<input type="radio" name="datasetUsed" value="Yes">Yes
-	<input type="radio" name="datasetUsed" value="No">No
-	<p>Dataset: <input type="file" name="datasetPath"></p>
-	<p>Do you want to run the Simulation with GUI?
-	<input type="radio" name="wannaGUI" value="Yes">Yes
-	<input type="radio" name="wannaGUI" value="No">No
-	<p>Number of initial nodes: <input type="text" name="initialNodes"></p>
-	<p><input type="submit" value="Start Simulation"></p>
-</form> 
+	<div id="wrapper">
+	<div id="header">
+	<div id="BM">BigMarket</div>
+	<div id="image"><img src="GSI.png" name="gsiImage" class="gsiImage"></img></div>
+	</div>
 
+	<div id="content">
+	<div id="form">
+	<p id=formTitle>Configure the simulation</p>
+	<form name="SimParameters" method="GET" 
+		action="parameters.jsp">
+		<p>Will you use Twitter dataset?</p>
+		<input type="radio" name="datasetUsed" value="Yes">Yes
+		<input type="radio" name="datasetUsed" value="No">No
+		<p>Dataset: <input type="file" name="datasetPath" value="Browse"></p>
+		<p>Number of initial nodes: <input type="text" name="initialNodes"></p>
+		<p><input type="submit" value="Start Simulation"></p>
+	</form> 
+	</div>
+	</div>
+	
+	<div id="footer">
+	<hr>
+		<ul>
+  			<li>Daniel Lara Diezma Grupo de Sistemas Inteligentes.</li>
+  			<li>Emilio Serrano Fernández Grupo de Sistemas Inteligentes.</li>
+  			<li>Carlos Ángel Iglesias Fernández Grupo de Sistemas Inteligentes.</li>
+		</ul> 		
+	</div>
+	</div>
 </body>
 
 </html>
