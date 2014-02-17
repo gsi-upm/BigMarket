@@ -46,20 +46,26 @@ along with TweetSim. If not, see <http://www.gnu.org/licenses/>
  * @email daniel.lara.diezma@gmail.com
  * 
  */
-public class Launcher {
+public class Launcher extends Thread{
 	
+	private Simulation sim;
+	public Launcher(Simulation sim) {
+		this.sim = sim;
+	}
 	/**
 	 * Main method
 	 * 
 	 * @param args
 	 */
-	public static void main(String[]args){
-		Simulation simulation = new Simulation(System.currentTimeMillis());
-		new SimulationGUI(simulation);
+	public void run(){
+		if (sim == null) 
+			this.sim = new Simulation(System.currentTimeMillis());
+		new SimulationGUI(this.sim);
 	}
 	
 	public void launchWithGUI(Simulation sim){
-		new SimulationGUI(sim);
+		this.sim = sim;
+		new SimulationGUI(this.sim);
 		long steps = 0;
 	    while(steps < 25){
 	    	steps = sim.schedule.getSteps();
@@ -67,6 +73,10 @@ public class Launcher {
 	    sim.finish();
 	}
 	
+	/**
+	 * 
+	 * @deprecated
+	 */
 	public void launchWithoutGUI(Simulation sim){
 		sim.start();
 		long steps = 0;

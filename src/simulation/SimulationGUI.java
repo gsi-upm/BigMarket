@@ -181,6 +181,10 @@ public class SimulationGUI extends GUIState{
 	public JFrame getNetworkFrame2D() {
 		return networkFrame2D;
 	}
+	
+	public Console getConsole(){
+		return this.console;
+	}
 
 	/**
 	 * @param networkFrame2D

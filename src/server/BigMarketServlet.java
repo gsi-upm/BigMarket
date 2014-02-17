@@ -56,7 +56,7 @@ public class BigMarketServlet extends HttpServlet {
 		}else{
 			sim.setFlag(1);
 		}
-		Launcher launcher = new Launcher();
+		Launcher launcher = new Launcher(sim);
 		if(wannaGUI.equals("Yes")){
 			launcher.launchWithGUI(sim);
 		}else{
