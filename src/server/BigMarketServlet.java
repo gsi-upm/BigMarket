@@ -33,7 +33,8 @@ public class BigMarketServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		launchSimulation(request);
-		writeHTML(response);
+
+        request.getRequestDispatcher("pauseScreen.html").forward(request, response);
 		
 	}
 
@@ -46,7 +47,6 @@ public class BigMarketServlet extends HttpServlet {
 	
 	private void launchSimulation(HttpServletRequest request){
 		int numberOfNodes = Integer.parseInt(request.getParameter("initialNodes"));
-		String wannaGUI = request.getParameter("wannaGUI");
 		String datasets = request.getParameter("datasetUsed");
 		Simulation sim = new Simulation(System.currentTimeMillis());
 		sim.setNumberOfNodes(numberOfNodes);
@@ -56,27 +56,16 @@ public class BigMarketServlet extends HttpServlet {
 		}else{
 			sim.setFlag(1);
 		}
-		Launcher launcher = new Launcher(sim);
-		if(wannaGUI.equals("Yes")){
-			launcher.launchWithGUI(sim);
-		}else{
-			launcher.launchWithoutGUI(sim);
-		}
 		
-		numberOfTweets = sim.getEventManager().getStatistics().getTotalNumberOfTweets();
-		System.out.println("NUMERO FINAL DE USERS " + sim.getUsers().size());
-		Neo4JManageTool neoDB = new Neo4JManageTool(sim);
-		neoDB.launchDatabaseTool();
-		System.out.println("Program finished");
+		Launcher launcher = new Launcher(sim);
+		launcher.start();
+	
+//		numberOfTweets = sim.getEventManager().getStatistics().getTotalNumberOfTweets();
+//		System.out.println("NUMERO FINAL DE USERS " + sim.getUsers().size());
+//		Neo4JManageTool neoDB = new Neo4JManageTool(sim);
+//		neoDB.launchDatabaseTool();
+//		System.out.println("Program finished");
 	}
 	
-	public void writeHTML(HttpServletResponse response) throws IOException{
-		PrintWriter pw = response.getWriter();
-		pw.println("<HTML><HEAD><TITLE>Simulation Results</TITLE></HEAD>");
-		pw.println("<H2>Simulation Results</H2><P>");
-		pw.println("Number of total tweets: " + numberOfTweets);
-		pw.println("</BODY></HTML>");
-		pw.close();
-	}
 
 }

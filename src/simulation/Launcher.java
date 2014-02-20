@@ -66,12 +66,10 @@ public class Launcher extends Thread{
 	public void launchWithGUI(Simulation sim){
 		this.sim = sim;
 		new SimulationGUI(this.sim);
-		long steps = 0;
-	    while(steps < 25){
-	    	steps = sim.schedule.getSteps();
-	    }
 	    sim.finish();
 	}
+	
+	
 	
 	/**
 	 * 
@@ -91,11 +89,5 @@ public class Launcher extends Thread{
 	    sim.finish();
 		
 	}
-	
-	
-	
-	
-	
-	
 	
 }

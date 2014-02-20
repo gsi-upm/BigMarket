@@ -14,9 +14,11 @@
 	<form name="SimParameters" method="GET" 
 		action="parameters.jsp">
 		<p>Will you use Twitter dataset?</p>
-		<input type="radio" name="datasetUsed" value="Yes">Yes
-		<input type="radio" name="datasetUsed" value="No">No
-		<p>Dataset: <input type="file" name="datasetPath" value="Browse"></p>
+		<input type="radio" name="datasetUsed" value="Yes"
+		onclick="document.SimParameters.datasetPath.disabled=false">Yes
+		<input type="radio" name="datasetUsed" value="No"
+		onclick="document.SimParameters.datasetPath.disabled=true">No
+		<p>Dataset: <input type="file" name="datasetPath" value="Browse" disabled></p>
 		<p>Number of initial nodes: <input type="text" name="initialNodes"></p>
 		<p><input type="submit" value="Start Simulation"></p>
 	</form> 

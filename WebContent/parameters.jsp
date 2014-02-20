@@ -3,6 +3,7 @@
 <%@ page import= "simulation.Simulation" %>
 <%@ page import= "simulation.Launcher" %> 
 <%@ page import= "simulation.util.Neo4JManageTool" %> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,6 @@
 	Simulation sim = new Simulation(System.currentTimeMillis());
 	sim.setNumberOfNodes(numberOfNodes);
 	Thread t = Thread.currentThread();
-	t.setName("Main Thread");
 	if(datasets.equals("Yes")){
 		sim.setFlag(0);
 	}else{
@@ -26,19 +26,17 @@
 	
 	Launcher launcher = new Launcher(sim);
 	launcher.start();
-	t.sleep(2500);
-	int control = 1;
-	int control2 = 5;
-	while(control2 != 1){
-		control2 = sim.getGui().getConsole().getPlayState();
-	}
-	while(control != 0){
+	t.sleep(3000);
+	System.out.println("SALGO DEL WHILE");
+	sim.getGui().getConsole().pressPause();
+	launcher.sleep(10000);
+	System.out.println("ESTADO: " + sim.getGui().getConsole().getPlayState());
+	while(sim.getGui().getConsole().getPlayState() == 2){
 		
-		if(sim.getGui().getConsole().getPlayState() == 2){
-			
-		}
-		control = sim.getGui().getConsole().getPlayState();
 	}
+	
+	//sim.getGui().getConsole().pressPlay();
+	//t.sleep(2000);
 	//int numberOfTweets = sim.getEventManager().getStatistics().getTotalNumberOfTweets();
 	//System.out.println("NUMERO FINAL DE USERS " + sim.getUsers().size());
 	//Neo4JManageTool neoDB = new Neo4JManageTool(sim);

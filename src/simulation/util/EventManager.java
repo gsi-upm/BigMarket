@@ -73,6 +73,7 @@ public class EventManager implements Steppable{
 	private static final long serialVersionUID = 3035231174520889738L;
 	private List<Event> events;
 	private Simulation sim;
+	private int simStatus;
 	private int numberOfAgents;
 	private Statistics statistics;
 	
@@ -87,6 +88,7 @@ public class EventManager implements Steppable{
 		this.setSim(sim);
 		this.statistics = statistics;
 		this.events = new ArrayList<Event>();
+		this.simStatus = 0;
 	}
 	
 	/**
@@ -189,7 +191,9 @@ public class EventManager implements Steppable{
 	 */
 	@Override
 	public void step(SimState sim) {
-		
+		Simulation simulation = (Simulation) sim;
+		setSimStatus(simulation.getGui().getConsole().getPlayState());
+
 	}
 
 	/**
@@ -225,6 +229,14 @@ public class EventManager implements Steppable{
 	
 	public Statistics getStatistics(){
 		return this.statistics;
+	}
+	
+	public void setSimStatus(int a){
+		this.simStatus = a;
+	}
+	
+	public int getSimStatus(){
+		return this.simStatus;
 	}
 	
 	//TODO

@@ -125,7 +125,7 @@ public class Simulation extends SimState{
 			graphManager.runGraphManagerWithoutDataSets(statistics);
 		}
 		
-		
+		this.schedule.scheduleRepeating(eventManager, 1, 1);
 		this.networkGrowth = new NetworkGrowth(this, this.graphManager);
 		this.schedule.scheduleRepeating(networkGrowth, 1, 1);
 		

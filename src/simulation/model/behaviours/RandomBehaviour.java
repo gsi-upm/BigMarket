@@ -94,13 +94,13 @@ public class RandomBehaviour extends UserModel{
 		percentage = enteredEdges/totalEdges;
 			if(percentage >= 0.00275){
 				user.setType(Constants.USER_TYPE_BROADCASTER);
-				System.out.println("EL usuario " + user.getUserName() + " es un " + Constants.USER_TYPE_BROADCASTER);
+				//System.out.println("EL usuario " + user.getUserName() + " es un " + Constants.USER_TYPE_BROADCASTER);
 			}else if(0.00275 > percentage &&  percentage >= 0.000121){
 				user.setType(Constants.USER_TYPE_ACQUAINTANCES);
-				System.out.println("EL usuario " + user.getUserName() + " es un " + Constants.USER_TYPE_ACQUAINTANCES);
+				//System.out.println("EL usuario " + user.getUserName() + " es un " + Constants.USER_TYPE_ACQUAINTANCES);
 			}else{
 				user.setType(Constants.USER_TYPE_ODDUSERS);
-				System.out.println("EL usuario " + user.getUserName() + " es un " + Constants.USER_TYPE_ODDUSERS);
+				//System.out.println("EL usuario " + user.getUserName() + " es un " + Constants.USER_TYPE_ODDUSERS);
 			}
 	}
 
