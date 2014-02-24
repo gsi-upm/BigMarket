@@ -27,26 +27,33 @@
 <body>
 	<div id="BM">BigMarket</div><br>
 	
+	<div id="radioButtons"
 	<p><input type="radio" name="choose" value="random" onclick="randomEn()">Random Network 
 	<input type="radio" name="choose" value="dataset" onclick="datasetEn()">Network based on dataset</p>
+	</div>
+
+
+	<div id="randomForm">
 
 	<form name="randomForm" method="POST" action="BigMarketServlet">
 
-	<div id="randomForm"> 
-		<p>Nodes <input type="text" name="nodes" style="width: 70px;" disabled="true" value="0"></p>
-	</div>
-	<div id="datasetForm">
-		<p>Dataset Identifier: 
-			
-		</p>
+		<div id="nodes">
+			<p>Nodes <input type="text" name="nodes" style="width: 70px;" disabled="true" value="0"></p>
+		</div>
 
-		<p><input type="button" value="Load new data set" name="load" disabled="true"> <input type="button" value="Create Network" name="create" disabled="true" onclick="createClick()"></p>
+	<div id="dataset">
+		Dataset Identifier: <br>
+			<input type="button" value="Load new data set" name="load" disabled="true"> <input type="button" value="Create Network" name="create" disabled="true" onclick="createClick()">
 	</div>
+
 	<div id="button">
 		<input type="submit" value="Set up">
 	</div>
+
 	</form>
 	
+	</div>
+
 	<div id="footer">
 	<hr>
 		<ul>
