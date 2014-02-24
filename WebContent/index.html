@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script>
+	function randomEn(){
+		document.randomForm.nodes.disabled=false;
+		document.randomForm.load.disabled=true;
+		document.randomForm.create.disabled=true;
+	}
+
+	function datasetEn(){
+		document.randomForm.nodes.disabled=true;
+		document.randomForm.nodes.value=0;
+		document.randomForm.load.disabled=false;
+		document.randomForm.create.disabled=false;
+	}
+
+	function createClick(){
+		window.open('http://localhost:7474','_blank');
+	}
+</script>
 	<meta charset="UTF-8">	
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<title>BigMarket</title>
@@ -8,21 +26,26 @@
 
 <body>
 	<div id="BM">BigMarket</div><br>
+	
+	<p><input type="radio" name="choose" value="random" onclick="randomEn()">Random Network 
+	<input type="radio" name="choose" value="dataset" onclick="datasetEn()">Network based on dataset</p>
 
-	<div id="form">
-	<p id="formTitle">Configure the simulation</p>
-	<form name="SimParameters" method="GET" 
-		action="parameters.jsp">
-		<p>Will you use Twitter dataset?</p>
-		<input type="radio" name="datasetUsed" value="Yes"
-		onclick="document.SimParameters.datasetPath.disabled=false">Yes
-		<input type="radio" name="datasetUsed" value="No"
-		onclick="document.SimParameters.datasetPath.disabled=true">No
-		<p>Dataset: <input type="file" name="datasetPath" value="Browse" disabled></p>
-		<p>Number of initial nodes: <input type="text" name="initialNodes"></p>
-		<p><input type="submit" value="Start Simulation"></p>
-	</form> 
+	<form name="randomForm" method="POST" action="BigMarketServlet">
+
+	<div id="randomForm"> 
+		<p>Nodes <input type="text" name="nodes" style="width: 70px;" disabled="true" value="0"></p>
 	</div>
+	<div id="datasetForm">
+		<p>Dataset Identifier: 
+			
+		</p>
+
+		<p><input type="button" value="Load new data set" name="load" disabled="true"> <input type="button" value="Create Network" name="create" disabled="true" onclick="createClick()"></p>
+	</div>
+	<div id="button">
+		<input type="submit" value="Set up">
+	</div>
+	</form>
 	
 	<div id="footer">
 	<hr>

@@ -16,11 +16,13 @@ import simulation.util.Neo4JManageTool;
  * Servlet implementation class BigMarketServlet
  */
 public class BigMarketServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private int numberOfTweets;
-	private boolean running = true;
        
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7634769531465961909L;
+
+	/**
      * @see HttpServlet#HttpServlet()
      */
     public BigMarketServlet() {
@@ -32,9 +34,9 @@ public class BigMarketServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		launchSimulation(request);
+		launchSimulation(request, response);
 
-        request.getRequestDispatcher("pauseScreen.html").forward(request, response);
+//        request.getRequestDispatcher("parameters.jsp").forward(request, response);
 		
 	}
 
@@ -45,20 +47,20 @@ public class BigMarketServlet extends HttpServlet {
 		doGet(request, response);	
 	}
 	
-	private void launchSimulation(HttpServletRequest request){
-		int numberOfNodes = Integer.parseInt(request.getParameter("initialNodes"));
-		String datasets = request.getParameter("datasetUsed");
+	private void launchSimulation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		Simulation sim = new Simulation(System.currentTimeMillis());
-		sim.setNumberOfNodes(numberOfNodes);
 		
-		if(datasets.equals("Yes")){
-			sim.setFlag(0);
+		if(Integer.parseInt(request.getParameter("nodes")) != 0){
+			int numberOfNodes = Integer.parseInt(request.getParameter("nodes"));		
+			sim.setNumberOfNodes(numberOfNodes);
 		}else{
-			sim.setFlag(1);
+			
 		}
 		
 		Launcher launcher = new Launcher(sim);
 		launcher.start();
+		
+		request.getRequestDispatcher("parameters.jsp").forward(request, response);
 	
 //		numberOfTweets = sim.getEventManager().getStatistics().getTotalNumberOfTweets();
 //		System.out.println("NUMERO FINAL DE USERS " + sim.getUsers().size());
