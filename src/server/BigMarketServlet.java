@@ -147,8 +147,6 @@ public class BigMarketServlet extends HttpServlet {
 		
 		FileSinkGEXF out = new FileSinkGEXF();
 		out.writeAll(sim.getGraphManager().getGraph(), "/home/dlara/pruebaDEGEFX.gexf");
-		FileSinkGEXF2 out2 = new FileSinkGEXF2();
-		out2.writeAll(sim.getGraphManager().getGraph(), "/home/dlara/pruebaDEGEFX2.gexf");
 		
 		//En realidad me da la pantalla de resultados
 		//request.getRequestDispatcher("parameters.jsp").forward(request, response);
