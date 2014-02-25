@@ -113,7 +113,6 @@ public class GraphManager {
 		if(sim.getGephiFlag()){
 			sendGraphToGephi(finalGraph);	
 		}
-		sendGraphToGephi(finalGraph);
 		createInitialNetwork();
 	}
 	

@@ -15,13 +15,13 @@ import org.neo4j.kernel.impl.util.FileUtils;
 
 import simulation.Simulation;
 import simulation.model.User;
-import simulation.model.event.Follow;
 
 
 
 public class Neo4JManageTool {
 	
 	public static final String DB_PATH = "/home/dlara/neo4j/data/graph.db";
+	public String path;
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 	GraphDatabaseService graphDb;
     Node firstNode;
@@ -46,8 +46,12 @@ public class Neo4JManageTool {
 	
 	void createDb(){
 		clearDb();
-		graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( DB_PATH );
-		registerShutdownHook( graphDb );
+		if(path == null){
+			graphDb = new GraphDatabaseFactory().newEmbeddedDatabase( DB_PATH );
+		}else{
+			graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(path);
+		}
+			registerShutdownHook( graphDb );
 
 		try ( Transaction tx = graphDb.beginTx() ){
 			for(User u : sim.getUsers()){
@@ -55,7 +59,6 @@ public class Neo4JManageTool {
 				Node nNeo = graphDb.createNode();
 				nNeo.setProperty("ID", u.getUserID());
 				nNeo.setProperty("Name", u.getUserName());
-				//nNeo.setProperty("Type of user", u.getType());
 				logger.info("User " + u.getUserName() + " created");
 			}
 
@@ -101,6 +104,13 @@ public class Neo4JManageTool {
 
 	}
 
+	public void setPath(String s){
+		this.path = s;
+	}
+	
+	public String getPath(){
+		return this.path;
+	}
 
 	private static void registerShutdownHook( final GraphDatabaseService graphDb ){
 

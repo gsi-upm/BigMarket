@@ -1,14 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import= "simulation.Simulation" %>
+<%@ page import= "simulation.Launcher" %> 
+<%@ page import= "simulation.util.Neo4JManageTool" %>
+
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
 	<link rel="stylesheet" type="text/css" href="css/running.css">	
 	<title>BigMarket</title>
 </head>
 <body>
+	<%
+	Integer broadUsers = (Integer)request.getAttribute("broadUsers");
+	Integer aqUsers = (Integer)request.getAttribute("aqUsers");
+	Integer oddUsers = (Integer)request.getAttribute("oddUsers");
+	Integer steps = (Integer)request.getAttribute("steps");
+	
+	%>
 	<div id="BM">BigMarket</div><br>
 	<div id="steps">
-	Time step:
+	Time step: <%=steps%>
 	</div>
 
 	<div id="table">
@@ -20,17 +33,17 @@
   		</tr>
   		<tr>
    		 	<th>Broadcaster</th>
-    		<th>200</th>
+    		<th><%=broadUsers%></th>
     		<th>100</th>
   		</tr>
   		<tr>
   			<th>Aquaintances</th>
-  			<th>200</th>
+  			<th><%=aqUsers%></th>
   			<th>100</th>
   		</tr>
   		<tr>
   			<th>Odd Users</th>
-  			<th>200</th>
+  			<th><%=oddUsers%></th>
   			<th>100</th>
   		</tr>
 
@@ -38,10 +51,12 @@
 	</div>
 
 	<div id="buttons">
-		<input id="b1" type="button" value="Run one step">
-		<input id="b2" type="button" value="Run">
-		<input id="b3" type="button" value="Pause">
-		<input id="b4" type="button" value="Stop">
+		<form name="actions" method="POST" action="BigMarketServlet">
+			<input id="b1" type="button" value="Run one step">
+			<input id="b2" type="button" value="Run">
+			<input id="b3" type="button" value="Pause">
+			<input id="b4" type="button" value="Stop">
+			<input type="hidden" id="buttonPressed" value="default">
 	</div>
 	
 	<div id="footer">

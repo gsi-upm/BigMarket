@@ -58,9 +58,7 @@ public class Launcher extends Thread{
 	 * @param args
 	 */
 	public void run(){
-		if (sim == null) 
-			this.sim = new Simulation(System.currentTimeMillis());
-		new SimulationGUI(this.sim);
+		launchWithGUI(sim);;
 	}
 	
 	public void launchWithGUI(Simulation sim){
