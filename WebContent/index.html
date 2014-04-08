@@ -16,17 +16,26 @@
 	}
 
 	function createClick(){
-		window.open('http://localhost:7474','_blank');
+		window.open('http://simplez.gsi.dit.upm.es:7474/browser','_blank');
 	}
+	
+	function loadClick(){
+		if(document.randomForm.bbddId.value == ""){
+			alert("Please introduce a valid bbdd identifier");
+		}else{
+			document.randomForm.loadPushed.value="ok";
+		}
+	}
+	
+
 </script>
 	<meta charset="UTF-8">	
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<title>BigMarket</title>
 </head>
 
-<body>
+<body link="white" alink="white" vlink="white">
 	<div id="BM">BigMarket</div><br>
-	
 	<div id="radioButtons">
 	<p><input type="radio" name="choose" value="random" onclick="randomEn()">Random Network 
 	<input type="radio" name="choose" value="dataset" onclick="datasetEn()">Network based on dataset</p>
@@ -36,18 +45,19 @@
 	<div id="randomForm">
 
 	<form name="randomForm" method="POST" action="BigMarketServlet">
-
+	Enter a name for the simulation:<input type="text" value="" name="DataId">
 		<div id="nodes">
 			<p>Nodes <input type="text" name="nodes" style="width: 70px;" disabled="true" value="0"></p>
 		</div>
 
 	<div id="dataset">
-		Dataset Identifier: <br>
-			<input type="file" value="Load new data set" name="load" disabled="true" type="folder"> <input type="button" value="Create Network" name="create" disabled="true" onclick="createClick()">
+		<a href="datasets.jsp"> See the datasets avalaible </a>
+		Dataset Identifier:<input type="text" value="" name="bbddId">
+			<input type="button" value="Load Graph" name="load" disabled="true" onclick="loadClick()"> <input type="button" value="Create Network" name="create" disabled="true" onclick="createClick()">
 	</div>
-
+	<input type="hidden" value="" name="loadPushed">
 	<div id="button">
-		<input type="submit" value="Set up">
+		<input type="submit" value="Set up" name="submit">
 	</div>
 
 	</form>

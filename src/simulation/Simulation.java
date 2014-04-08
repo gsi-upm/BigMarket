@@ -77,6 +77,7 @@ public class Simulation extends SimState{
 	private boolean gephiFlag;
 	private int days;
 	private int months;
+	private String simDataSet;
 
 	/**
 	 * Main constructor of the class
@@ -90,7 +91,7 @@ public class Simulation extends SimState{
 		this.GUIFLAG = 1;
 		this.gephiFlag = false;
 		this.days = 0;
-		this.months = 0;
+		this.months = 0;		
 	}
 	
 	/**
@@ -99,6 +100,7 @@ public class Simulation extends SimState{
 	 */
 	public void start(){
 		logger.info("Configuring simulation...");
+		logger.info("Simulation DataSet: " + this.getSimDataset());
 		super.start();
 		
 		this.graphManager = new GraphManager(this);
@@ -119,7 +121,7 @@ public class Simulation extends SimState{
 			}catch(Exception e){
 					
 			}
-			graphManager.runGraphManagerWithoutDataSets(statistics);
+			graphManager.runGraphManagerWithoutDataSets(statistics);	
 		}else{
 			eventManager.loadRandomEvents(25, null);
 			graphManager.runGraphManagerWithoutDataSets(statistics);
@@ -250,6 +252,14 @@ public class Simulation extends SimState{
 	
 	public String getDate(){
 		return "The simulation covers " + months + " months and " + days + " days";
+	}
+	
+	public String getSimDataset(){
+		return this.simDataSet;
+	}
+	
+	public void setSimDataSet(String d){
+		this.simDataSet = d;
 	}
 	
 	public static void main(String[]args){

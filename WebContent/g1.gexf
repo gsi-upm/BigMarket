@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns="http://www.gexf.net/1.2draft" version="1.2" xmlns:viz="http://www.gexf.net/1.2draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd">
+  <meta lastmodifieddate="2014-03-25">
+    <creator>Gephi 0.8.1</creator>
+    <description></description>
+  </meta>
+  <graph defaultedgetype="directed" mode="static">
+    <nodes>
+      <node id="19" label="19">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-238.69376" y="207.29593" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="17" label="17">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-326.01553" y="312.43246" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="18" label="18">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="302.84726" y="-68.47106" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="15" label="15">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="387.413" y="-111.93221" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="16" label="16">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="193.59567" y="479.76248" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="13" label="13">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="125.63095" y="118.2573" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="14" label="14">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-445.15942" y="63.592686" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="11" label="11">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="168.47385" y="-119.42547" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="12" label="12">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-340.14426" y="-302.0007" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="21" label="21">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-0.72448677" y="-141.45651" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="20" label="20">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="293.6517" y="-122.47256" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="22" label="22">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-234.66164" y="-368.65344" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="23" label="23">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="262.9324" y="547.8832" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="24" label="24">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="19.177063" y="26.55338" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="25" label="25">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-144.27505" y="-42.185635" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="26" label="26">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="417.44717" y="-297.9128" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="27" label="27">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="219.09818" y="215.40256" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="28" label="28">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-323.46115" y="-258.9715" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="3" label="3">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-51.421997" y="18.401493" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="2" label="2">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="362.13687" y="-233.51111" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="10" label="10">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-335.68414" y="80.01469" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="1" label="1">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="24.618256" y="-286.32962" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="0" label="0">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-13.240447" y="229.51352" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="7" label="7">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-217.02109" y="-67.64135" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="6" label="6">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="118.52255" y="31.353367" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="5" label="5">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-292.9481" y="-264.51895" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="4" label="4">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="189.3425" y="36.95447" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="9" label="9">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="251.09879" y="-142.00616" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+      <node id="8" label="8">
+        <attvalues></attvalues>
+        <viz:size value="10.0"></viz:size>
+        <viz:position x="-372.53516" y="460.07156" z="0.0"></viz:position>
+        <viz:color r="153" g="153" b="153"></viz:color>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="19" source="19" target="1" label="19">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="17" source="17" target="0" label="17">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="18" source="18" target="0" label="18">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="15" source="15" target="0" label="15">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="16" source="16" target="1" label="16">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="13" source="13" target="0" label="13">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="14" source="14" target="1" label="14">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="11" source="11" target="0" label="11">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="12" source="12" target="1" label="12">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="21" source="21" target="0" label="21">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="20" source="20" target="0" label="20">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="22" source="22" target="1" label="22">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="23" source="23" target="1" label="23">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="24" source="24" target="0" label="24">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="25" source="25" target="0" label="25">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="26" source="26" target="1" label="26">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="27" source="27" target="0" label="27">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="28" source="28" target="0" label="28">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="3_1" source="3" target="1" label="3_1">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="2_0" source="2" target="0" label="2_0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="10" source="10" target="1" label="10">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="0_1" source="0" target="1" label="0_1">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="7" source="7" target="1" label="7">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="6" source="6" target="0" label="6">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="5" source="5" target="0" label="5">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="4" source="4" target="0" label="4">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="9" source="9" target="0" label="9">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="8" source="8" target="1" label="8">
+        <attvalues></attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>
