@@ -3,6 +3,12 @@
 <%@page import="java.net.URL"%>
 <%@page import="java.io.FileReader"%>
 <%@page import="java.io.BufferedReader"%>
+<%@page import="org.apache.commons.httpclient.HttpClient"%>
+<%@page import="org.apache.commons.httpclient.methods.GetMethod"%>
+<%@page import="org.apache.commons.httpclient.Header"%>
+<%@page import="com.google.gson.JsonArray"%>
+<%@page import="com.google.gson.JsonElement"%>
+<%@page import="com.google.gson.JsonParser" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,19 +20,32 @@
     <body>
     <div id="BM">BigMarket</div><br>
         <%            
-            File archivo = new File("/home/dlara/Gitted/WebContent/datasets");
-    		FileReader fileReader = new FileReader(archivo);
-    		BufferedReader buffReader = new BufferedReader(fileReader);
-    		String linea = null;
-    		
-    		while((linea=buffReader.readLine()) != null){
-    			out.print(linea);
-    			out.print("<br>");
-    		}
-    		
-    		if(null!=fileReader){
-    			fileReader.close();
-    		}
+        try{
+			String res = "";
+			String nodePointUrl = "http://localhost:7474/db/data/labels/";
+			HttpClient client = new HttpClient();
+			GetMethod mGet = new GetMethod(nodePointUrl);
+	
+
+
+			Header mtHeader = new Header();
+			mtHeader.setName("accept");
+			mtHeader.setValue("application/json");
+			mGet.addRequestHeader(mtHeader);
+
+			client.executeMethod(mGet);
+			res = mGet.getResponseBodyAsString();		
+											
+			JsonArray root = (JsonArray) new JsonParser().parse(res);
+			
+			for(JsonElement j : root){
+				out.write(j.toString().substring(1, j.toString().length()-1));
+				out.write("<br>");
+			}
+
+		}catch(Exception e){
+			System.out.println("Exception in creating node in neo4j : " + e);
+		}	
         %>
         <div id="footer">
 	<hr>

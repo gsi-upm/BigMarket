@@ -4,7 +4,10 @@ import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -111,8 +114,21 @@ public class BigMarketServlet extends HttpServlet {
 		}else if(request.getParameter("loadPushed").equals("ok")){
 			System.out.println("HE PULSADO CARGAR");
 			Neo4JManageTool n = new Neo4JManageTool();
-//			n.retrieveGraph(request.getParameter("bbddId"));
+			n.launchLoad(request.getParameter("bbddId"));
+			sim = new Simulation(System.currentTimeMillis());
+			sim.setDataBase(n);
+			sim.setFlag(2);
+			String data = request.getParameter("DataId");
+			sim.setSimDataSet(data);
+			Launcher launcher = new Launcher(sim);
+			launcher.start();
 			
+			request.setAttribute("broadUsers",getBroadUsers(sim));
+			request.setAttribute("aqUsers", getAqUsers(sim));
+			request.setAttribute("oddUsers", getOddUsers(sim));
+			request.setAttribute("steps", sim.schedule.getSteps());
+			request.setAttribute("sim", sim);
+			request.getRequestDispatcher("parameters.jsp").forward(request, response);
 		}else{
 			launchSimulation(request, response);
 		}
@@ -127,18 +143,15 @@ public class BigMarketServlet extends HttpServlet {
 	}
 	
 	private void launchSimulation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		sim = new Simulation(System.currentTimeMillis());
-		
-		if(Integer.parseInt(request.getParameter("nodes")) != 0){
-			int numberOfNodes = Integer.parseInt(request.getParameter("nodes"));		
-			sim.setNumberOfNodes(numberOfNodes);
-			sim.setFlag(1);
-			String data = request.getParameter("DataId");
-			sim.setSimDataSet(data);
-		}else{
-			
-		}
-		
+			sim = new Simulation(System.currentTimeMillis());
+			if(Integer.parseInt(request.getParameter("nodes")) != 0){
+				int numberOfNodes = Integer.parseInt(request.getParameter("nodes"));		
+				sim.setNumberOfNodes(numberOfNodes);
+				String data = request.getParameter("DataId");
+				sim.setSimDataSet(data);
+			}else{
+			}
+				
 		Launcher launcher = new Launcher(sim);
 		launcher.start();
 		
@@ -208,12 +221,12 @@ public class BigMarketServlet extends HttpServlet {
 		
 		neoDB.setSim(sim);
 		neoDB.launchDatabaseTool();
-		neoDB.saveDataSetName(sim.getSimDataset());
+//		neoDB.saveDataSetName(sim.getSimDataset());
 		
 		request.getRequestDispatcher("results.jsp").forward(request, response);
 	}
 	
-	private void calculateBetweenness(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	private void calculateBetweenness(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		String path = "/home/dlara/Gitted/WebContent/g.gexf";
 		FileSinkGEXF2 out = new FileSinkGEXF2();
 		out.writeAll(sim.getGraphManager().getGraph(), path);
@@ -248,18 +261,49 @@ public class BigMarketServlet extends HttpServlet {
 		AttributeModel model = ac.getModel();
 		AttributeColumn col = attributeModel.getNodeTable().getColumn(GraphDistance.BETWEENNESS);
 		System.out.println(col);
-		SortedMap bet = new TreeMap(java.util.Collections.reverseOrder());
+		
+		HashMap<Double, Integer> bet = new HashMap<Double, Integer>();
+		List<Double> finalBet = new ArrayList<Double>();
+		List<Integer> finalNodes = new ArrayList<Integer>();
 		for(Node n : graphModel.getGraph().getNodes()) {
 			 Double centrality = (Double)n.getNodeData().getAttributes().getValue(col.getTitle());
 			 System.out.println("Node " + n.getId() + " betweeness " + centrality);
-			 bet.put(n.getId(), centrality);
+			 bet.put(centrality, n.getId());
 		}
-		Iterator iterator = bet.keySet().iterator();
-		while (iterator.hasNext()) {
-		Object key = iterator.next();
-		System.out.println("Clave : " + key + " Valor :" + bet.get(key));
-		}
-		request.setAttribute("betweenness", bet);
+		List<Double> betPerNode = new ArrayList<Double>(bet.keySet());
+
+	    Collections.sort(betPerNode, new Comparator<Double>() {
+
+			@Override
+			public int compare(Double o1, Double o2) {
+				// TODO Auto-generated method stub
+				return (int) (o1-o2);
+			}
+
+			
+	    });
+	    
+	    java.util.Collections.reverse(betPerNode);
+    
+	    for(double p : betPerNode){
+	    	finalBet.add(p);
+	    	finalNodes.add(bet.get(p));  	
+	    }
+	    Double[] arrayBet = new Double[finalBet.size()];
+	    int[] arrayNodes = new int[finalNodes.size()];
+	    
+	    for(int i = 0; i < arrayBet.length; i++){
+	    	arrayBet[i] = finalBet.get(i);
+	    }
+	    
+	    for(int j = 0; j < arrayNodes.length; j++){
+	    	arrayNodes[j] = finalNodes.get(j);
+	    }
+	    
+		request.setAttribute("bet", arrayBet);
+		request.setAttribute("betnodes", arrayNodes);
+		request.getRequestDispatcher("show.jsp").forward(request, response);
+
 	}
 	
 	private void calculateCloseness(HttpServletRequest request, HttpServletResponse response) throws IOException{

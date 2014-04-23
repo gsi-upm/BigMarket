@@ -124,6 +124,22 @@ public class GraphManager {
 		createScaleFreeNetwork(st);
 	}
 	
+	public void runGraphFromDataBase(Statistics st, Neo4JManageTool neo){{
+		createTheViewers();
+		for(int n = 0; n < neo.getNodes().size(); n++){
+			finalGraph.addNode(neo.getNodes().get(n));
+			User user = new User(n, "id" + n, "User" + n);
+		    sim.addUser(user);
+			
+		}
+		for(String s : neo.getRelations().keySet()){
+			finalGraph.addEdge(s, finalGraph.getNode(s), finalGraph.getNode(neo.getRelations().get(s)), true);
+			Edge e = finalGraph.getEdge(s);
+			createInitialFollows(e);
+		}
+	}
+	}
+	
 	/**
 	 * This method create the graphic visualization of the graph
 	 */

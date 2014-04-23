@@ -48,6 +48,7 @@ import sim.engine.SimState;
 import simulation.model.User;
 import simulation.util.EventManager;
 import simulation.util.GraphManager;
+import simulation.util.Neo4JManageTool;
 import simulation.util.NetworkGrowth;
 import simulation.util.Statistics;
 
@@ -71,6 +72,7 @@ public class Simulation extends SimState{
 	private GraphManager graphManager;
 	private NetworkGrowth networkGrowth;
 	private Statistics statistics;
+	private Neo4JManageTool neo;
 	private int numberOfNodes;
 	private int FLAG;
 	private int GUIFLAG;
@@ -87,7 +89,7 @@ public class Simulation extends SimState{
 	public Simulation(long seed) {
 		super(seed);
 		this.users = new ArrayList<>();
-		this.FLAG = 2;
+		this.FLAG = 1;
 		this.GUIFLAG = 1;
 		this.gephiFlag = false;
 		this.days = 0;
@@ -123,8 +125,8 @@ public class Simulation extends SimState{
 			}
 			graphManager.runGraphManagerWithoutDataSets(statistics);	
 		}else{
-			eventManager.loadRandomEvents(25, null);
-			graphManager.runGraphManagerWithoutDataSets(statistics);
+			eventManager.loadFromDataBase(neo, null);
+			graphManager.runGraphFromDataBase(statistics, neo);;
 		}
 		
 		this.schedule.scheduleRepeating(eventManager, 1, 1);
@@ -242,6 +244,10 @@ public class Simulation extends SimState{
 		
 	}
 	
+	public int getGlobalFlag(){
+		return this.FLAG;
+	}
+	
 	public void setGUIFlag(int flag){
 		this.GUIFLAG = flag;
 	}
@@ -260,6 +266,14 @@ public class Simulation extends SimState{
 	
 	public void setSimDataSet(String d){
 		this.simDataSet = d;
+	}
+	
+	public void setDataBase(Neo4JManageTool n){
+		this.neo = n;
+	}
+	
+	public Neo4JManageTool getDataBase(){
+		return this.neo;
 	}
 	
 	public static void main(String[]args){

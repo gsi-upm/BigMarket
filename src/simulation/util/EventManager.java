@@ -132,6 +132,12 @@ public class EventManager implements Steppable{
 		return events;
 	}
 	
+	public List<Event> loadFromDataBase(Neo4JManageTool neo, List<Event> event){
+		this.numberOfAgents = neo.getNodes().size();
+		this.events = event;
+		return events;
+	}
+	
 	
 //	/**
 //	 * This method generate random tweets 
