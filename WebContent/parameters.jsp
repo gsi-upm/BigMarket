@@ -34,6 +34,9 @@
 	Integer broadUsers = (Integer)request.getAttribute("broadUsers");
 	Integer aqUsers = (Integer)request.getAttribute("aqUsers");
 	Integer oddUsers = (Integer)request.getAttribute("oddUsers");
+	Integer oddTweets = (Integer)request.getAttribute("oddTweets");
+	Integer acqTweets = (Integer) request.getAttribute("acqTweets");
+	Integer broadTweets = (Integer) request.getAttribute("broadTweets");
 	Long steps = (Long)request.getAttribute("steps");
 	Simulation sim = (Simulation)request.getAttribute("sim");
 	
@@ -55,17 +58,17 @@
   		<tr>
    		 	<th>Broadcaster</th>
     		<th><%=broadUsers%></th>
-    		<th>100</th>
+    		<th><%=broadTweets %></th>
   		</tr>
   		<tr>
   			<th>Aquaintances</th>
   			<th><%=aqUsers%></th>
-  			<th>100</th>
+  			<th><%=acqTweets %></th>
   		</tr>
   		<tr>
   			<th>Odd Users</th>
   			<th><%=oddUsers%></th>
-  			<th>100</th>
+  			<th><%=oddTweets %></th>
   		</tr>
 
 	</table> 

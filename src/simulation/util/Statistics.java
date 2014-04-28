@@ -52,6 +52,9 @@ public class Statistics{
 	
 	private Simulation sim;
 	private int totalNumberOfTweets;
+	private int oddTweets;
+	private int acqTweets;
+	private int broadTweets;
 	
 	
 	/**
@@ -91,5 +94,30 @@ public class Statistics{
 		this.totalNumberOfTweets++;
 		System.out.println("NUMERO TOTAL DE TWEETS " + this.totalNumberOfTweets);
 	}
+	
+	public void increaseOddTweets(){
+		this.oddTweets++;
+	}
+	
+	public void increaseBroadTweets(){
+		this.broadTweets++;
+	}
+	
+	public void increaseAcqTweets(){
+		this.acqTweets++;
+	}
+	
+	public int getOddTweets(){
+		return this.oddTweets;
+	}
+	
+	public int getAcqTweets(){
+		return this.acqTweets;
+	}
+	
+	public int getBroadTweets(){
+		return this.broadTweets;
+	}
+	
 }
 

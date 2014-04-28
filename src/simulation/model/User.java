@@ -44,13 +44,18 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.graphstream.graph.Node;
+import org.ibex.nestedvm.UsermodeConstants;
 
 import sim.engine.SimState;
 import sim.engine.Steppable;
 import simulation.Simulation;
+import simulation.model.behaviours.AcquaintanceBehaviour;
+import simulation.model.behaviours.BroadcasterBehaviour;
+import simulation.model.behaviours.OddUserBehaviour;
 import simulation.model.behaviours.RandomBehaviour;
 import simulation.model.event.Follow;
 import simulation.model.event.Tweet;
+import simulation.util.Constants;
 
 
 /**
@@ -74,6 +79,9 @@ public class User implements Steppable{
 	private List<Tweet> timeline;
 	private String type;
 	private UserModel random;
+	private UserModel acq;
+	private UserModel odd;
+	private UserModel broad;
 
 	 
 	
@@ -92,6 +100,9 @@ public class User implements Steppable{
 		this.followed = new ArrayList<User>();
 		this.followers = new ArrayList<User>();
 		this.random = new RandomBehaviour("RandomBehaviour");
+		this.acq = new AcquaintanceBehaviour("AcquaintanceBehaviour");
+		this.odd = new OddUserBehaviour("OddBehaviour");
+		this.broad = new BroadcasterBehaviour("BroadCasterBehaviour");
 
 	}
 	
@@ -142,7 +153,15 @@ public class User implements Steppable{
 	@Override
 	public void step(SimState sim) {
 		Simulation simulation = (Simulation) sim;
-		random.userBehaviour(simulation, this);
+		if(this.getType() == Constants.USER_TYPE_ACQUAINTANCES){
+			acq.userBehaviour(simulation, this);
+		}if(this.getType() == Constants.USER_TYPE_BROADCASTER){
+			broad.userBehaviour(simulation, this);
+		}if(this.getType() == Constants.USER_TYPE_ODDUSERS){
+			odd.userBehaviour(simulation, this);
+		}else{
+			random.userBehaviour(simulation, this);
+		}
 	}
 	
 	/**

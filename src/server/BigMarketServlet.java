@@ -179,6 +179,9 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("oddUsers", getOddUsers(sim));
 		request.setAttribute("steps", sim.schedule.getSteps());
 		request.setAttribute("sim", sim);
+		request.setAttribute("oddTweets", sim.getEventManager().getStatistics().getOddTweets());
+		request.setAttribute("broadTweets", sim.getEventManager().getStatistics().getBroadTweets());
+		request.setAttribute("acqTweets", sim.getEventManager().getStatistics().getAcqTweets());
 		request.getRequestDispatcher("parameters.jsp").forward(request, response);
 	}
 	
@@ -194,6 +197,9 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("oddUsers", getOddUsers(sim));
 		request.setAttribute("steps", sim.schedule.getSteps());
 		request.setAttribute("sim", sim);
+		request.setAttribute("oddTweets", sim.getEventManager().getStatistics().getOddTweets());
+		request.setAttribute("broadTweets", sim.getEventManager().getStatistics().getBroadTweets());
+		request.setAttribute("acqTweets", sim.getEventManager().getStatistics().getAcqTweets());
 		request.getRequestDispatcher("parameters.jsp").forward(request, response);
 		
 		
@@ -208,6 +214,9 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("oddUsers", getOddUsers(sim));
 		request.setAttribute("steps", sim.schedule.getSteps());
 		request.setAttribute("sim", sim);
+		request.setAttribute("oddTweets", sim.getEventManager().getStatistics().getOddTweets());
+		request.setAttribute("broadTweets", sim.getEventManager().getStatistics().getBroadTweets());
+		request.setAttribute("acqTweets", sim.getEventManager().getStatistics().getAcqTweets());
 		request.getRequestDispatcher("parameters.jsp").forward(request, response);
 	}
 	
