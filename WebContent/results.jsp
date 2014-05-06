@@ -15,6 +15,11 @@
 	function clickResults(){
 		document.finalForm.action.value="results";
 	}
+	
+	function clickSave(){
+		document.finalForm.action.value="save";
+	}
+	
 </script>
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,7 +28,13 @@
 <body>
 <div id="BM">BigMarket</div><br>
 
-
+<div id="nav">
+	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/index.html"><button type="button">Home</button></a>
+	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/parameters.jsp"><button type="button">Parameters</button></a>
+	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/results.jsp"><button type="button">Results</button></a>
+	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/show.jsp"><button type="button">Show</button></a>
+	
+</div>
 <div id="results">
 Select which result would you want to see
 </div>
@@ -34,6 +45,7 @@ Select which result would you want to see
 <input type="submit" name="results" value="See results" onclick="clickResults()">
 <input type="submit" name="see" value="See network" onclick="clickSee()">
 <input type="submit" name="export" value="Export network" onclick="clickExport()">
+<input type="submit" name="save" value="Save in DB" onclick="clickSave()">
 <input type="hidden" name="action" value="default">
 
 </form>

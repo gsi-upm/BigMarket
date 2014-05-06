@@ -2,8 +2,12 @@ package server;
 
 import java.io.Console;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -51,6 +55,7 @@ import simulation.Launcher;
 import simulation.Simulation;
 import simulation.model.User;
 import simulation.util.Constants;
+import simulation.util.GraphJSONParser;
 import simulation.util.Neo4JManageTool;
 
 /**
@@ -107,6 +112,8 @@ public class BigMarketServlet extends HttpServlet {
 					calculateCloseness(request, response);
 					request.getRequestDispatcher("show.jsp").forward(request, response);
 				}
+			}else if(request.getParameter("action").equals("save")){
+				clickSave(request, response);
 			}else{
 				clickExport(request, response);
 			}
@@ -228,9 +235,17 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("steps", sim.schedule.getSteps());
 		request.setAttribute("sim", sim);
 		
+//		neoDB.setSim(sim);
+//		neoDB.launchDatabaseTool();
+//		neoDB.saveDataSetName(sim.getSimDataset());
+		
+		request.getRequestDispatcher("results.jsp").forward(request, response);
+	}
+	
+	private void clickSave(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	
 		neoDB.setSim(sim);
 		neoDB.launchDatabaseTool();
-//		neoDB.saveDataSetName(sim.getSimDataset());
 		
 		request.getRequestDispatcher("results.jsp").forward(request, response);
 	}
@@ -361,55 +376,11 @@ public class BigMarketServlet extends HttpServlet {
 	}
 	
 	private void clickSeeNetwork(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		String path = "/home/dlara/Gitted/WebContent/g.gexf";
-		FileSinkGEXF2 out = new FileSinkGEXF2();
-		out.writeAll(sim.getGraphManager().getGraph(), path);
-		
-		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
-		pc.newProject();
-		Workspace workspace = pc.getCurrentWorkspace();
-		
-		ImportController importController = Lookup.getDefault().lookup(ImportController.class);
-		Container container;
-		try{
-			File file = new File(path);
-			container = importController.importFile(file);
-			container.getLoader().setEdgeDefault(EdgeDefault.DIRECTED);
-			container.setAllowAutoNode(false);
-		}catch(Exception ex) {
-			ex.printStackTrace();
-			return;
-		}
-		
-		importController.process(container,new DefaultProcessor(), workspace);
-		GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getModel();
-		
-		YifanHuLayout layout = new YifanHuLayout(null, new StepDisplacement(1f));
-		layout.setGraphModel(graphModel);
-		layout.resetPropertiesValues();
-		layout.setOptimalDistance(200f);
-		
-		layout.initAlgo();
-		
-		for(int i = 0; i < 100 && layout.canAlgo(); i++){
-			layout.goAlgo();
-		}
-		
-		 
-		
-		String path2 = "/home/dlara/Gitted/WebContent/g1.gexf";
-
-		ExportController ec = Lookup.getDefault().lookup(ExportController.class);
-		try{
-			ec.exportFile(new File(path2));
-		}catch(IOException ex) {
-			ex.printStackTrace();
-			return;
-		}
-
-		request.setAttribute("file", path2);
-		request.getRequestDispatcher("network.html").forward(request, response);
+		GraphJSONParser g = new GraphJSONParser(sim.getGraphManager().getGraph());
+		g.launchParser();
+		request.getRequestDispatcher("seeNet.html").forward(request, response);
 	}
+	
 	
 	private void clickExport(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String path = "/home/dlara/Gitted/WebContent/g.gexf";
@@ -432,6 +403,8 @@ public class BigMarketServlet extends HttpServlet {
 			return;
 		}
 		
+		
+		
 		importController.process(container,new DefaultProcessor(), workspace);
 		GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getModel();
 		
@@ -447,9 +420,87 @@ public class BigMarketServlet extends HttpServlet {
             ex.printStackTrace();
             return;
         }
-		request.setAttribute("file", path2);
-		request.getRequestDispatcher("network.html").forward(request, response);
+        
+        try {
+			System.out.println("PUNTO 1");
+            // Url con la foto
+            URL url = new URL(
+                    "http://simplez.gsi.dit.upm.es:8080/BigMarket/g.gexf");
+            
+			System.out.println("PUNTO 2");
+
+            // establecemos conexion
+            URLConnection urlCon = url.openConnection();
+            
+			System.out.println("PUNTO 3");
+ 
+            // Sacamos por pantalla el tipo de fichero
+            System.out.println(urlCon.getContentType());
+			System.out.println("PUNTO 4");
+ 
+            // Se obtiene el inputStream de la foto web y se abre el fichero
+            // local.
+            InputStream is = urlCon.getInputStream();
+            FileOutputStream fos = new FileOutputStream("/home/dlara/prueba.gexf");
+ 
+            // Lectura de la foto de la web y escritura en fichero local
+            byte[] array = new byte[1000]; // buffer temporal de lectura.
+            int leido = is.read(array);
+            while (leido > 0) {
+                fos.write(array, 0, leido);
+                leido = is.read(array);
+            }
+ 
+            // cierre de conexion y fichero.
+            is.close();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        request.getRequestDispatcher("results.jsp").forward(request, response);
 	}
+	
+	
+//	private void clickExport(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+//		String path = "/home/dlara/Gitted/WebContent/g.gexf";
+//		FileSinkGEXF2 out = new FileSinkGEXF2();
+//		out.writeAll(sim.getGraphManager().getGraph(), path);
+//		
+//		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
+//		pc.newProject();
+//		Workspace workspace = pc.getCurrentWorkspace();
+//		
+//		ImportController importController = Lookup.getDefault().lookup(ImportController.class);
+//		Container container;
+//		try{
+//			File file = new File("/home/dlara/Gitted/WebContent/g.gexf");
+//			container = importController.importFile(file);
+//			container.getLoader().setEdgeDefault(EdgeDefault.DIRECTED);
+//			container.setAllowAutoNode(false);
+//		}catch(Exception ex) {
+//			ex.printStackTrace();
+//			return;
+//		}
+//		
+//		importController.process(container,new DefaultProcessor(), workspace);
+//		GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getModel();
+//		
+//		
+//		ExportController ec = Lookup.getDefault().lookup(ExportController.class);
+//		GraphExporter exporter = (GraphExporter) ec.getExporter("gexf");     //Get GEXF exporter
+//        exporter.setExportVisible(true);  //Only exports the visible (filtered) graph
+//        exporter.setWorkspace(workspace);
+//        String path2 = "/home/dlara/Gitted/WebContent/g1.gexf";
+//        try {
+//            ec.exportFile(new File("/home/dlara/Gitted/WebContent/g1.gexf"), exporter);
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//            return;
+//        }
+//		request.setAttribute("file", path2);
+//		request.getRequestDispatcher("network.html").forward(request, response);
+//	}
 	
 	
 	public int getBroadUsers(Simulation sim){
