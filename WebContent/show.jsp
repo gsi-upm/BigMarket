@@ -6,6 +6,18 @@
 <head>
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+#tableBet{
+float:left;
+padding-right: 5%;
+}
+
+#tableClose{
+
+}
+
+</style>
+
 <title>Big Market</title>
 </head>
 <div id="BM">BigMarket</div><br>
@@ -22,14 +34,49 @@
 	
 	Double[] close = (Double[]) request.getAttribute("close");
 	
-	List<Double> bet = (List<Double>) request.getAttribute("bet");
-	List<Integer> betNodes = (List<Integer>) request.getAttribute("betnodes");
-	
-	for(int i = 0; i<bet.size(); i++){
-		out.print(bet.get(i));
-		out.print(betNodes.get(i));
-	}
+
 	
 	%>
+	<div id="tableBet">
+	<table width="20%" cellspacing="5" cellpadding="0">
+  		<tr>
+    		<th>Betweeness</th>
+  		</tr>
+  		<tr>
+  			<th>Node 0</th>
+  			<th>11.0</th>
+  		</tr>
+  		<tr>
+  			<th>Node 1</th>
+  			<th>2.0</th>
+  		</tr>
+  		<tr>
+  			<th>Others</th>
+  			<th>0.0</th>
+  		</tr>
+  	</table>
+  	</div>
+  	
+  	<div id="tableClose">
+  	<table width="20%" cellspacing="5" cellpadding="0">
+  		<tr>
+    		<th>Closeness</th>
+  		</tr>
+  		<tr>
+  			<th>1.5</th>
+  			<th>0 1 3 5 6 7 8 10 11</th>
+  		</tr>
+  		<tr>
+  			<th>1.0</th>
+  			<th>2 4 9 12</th>
+  		</tr>
+  		<tr>
+  			<th>0.0</th>
+  			<th>Others</th>
+  		</tr>
+  	</table>
+  	</div>
+  
+	
 </body>
 </html>

@@ -1,3 +1,37 @@
+/**
+*
+*
+* This file is part of BigMarket.
+*
+* BigMarket has been developed by members of the research Group on
+* Intelligent Systems [GSI] (Grupo de Sistemas Inteligentes),
+* acknowledged group by the Technical University of Madrid [UPM]
+* (Universidad Politécnica de Madrid)
+*
+* Authors:
+* Daniel Lara
+* Carlos A. Iglesias
+* Emilio Serrano
+*
+* Contact:
+* http://www.gsi.dit.upm.es/;
+*
+*
+*
+* BigMarket is free software:
+* you can redistribute it and/or modify it under the terms of the GNU
+* General Public License as published by the Free Software Foundation,
+* either version 3 of the License, or (at your option) any later version.
+*
+*
+* BigMarket is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with VoteSim. If not, see <http://www.gnu.org/licenses/>
+*/
 package server;
 
 import java.io.Console;
@@ -151,6 +185,7 @@ public class BigMarketServlet extends HttpServlet {
 	
 	private void launchSimulation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 			sim = new Simulation(System.currentTimeMillis());
+			sim.setFlag(1);
 			if(Integer.parseInt(request.getParameter("nodes")) != 0){
 				int numberOfNodes = Integer.parseInt(request.getParameter("nodes"));		
 				sim.setNumberOfNodes(numberOfNodes);
@@ -235,9 +270,7 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("steps", sim.schedule.getSteps());
 		request.setAttribute("sim", sim);
 		
-//		neoDB.setSim(sim);
-//		neoDB.launchDatabaseTool();
-//		neoDB.saveDataSetName(sim.getSimDataset());
+		sim.finish();
 		
 		request.getRequestDispatcher("results.jsp").forward(request, response);
 	}
@@ -393,7 +426,16 @@ public class BigMarketServlet extends HttpServlet {
 		
 		ImportController importController = Lookup.getDefault().lookup(ImportController.class);
 		Container container;
+		try{javax.swing.JFileChooser jF1= new javax.swing.JFileChooser();
+		String ruta = "";
 		try{
+		if(jF1.showSaveDialog(null)==jF1.APPROVE_OPTION){
+		ruta = jF1.getSelectedFile().getAbsolutePath();
+		//Aqui ya tiens la ruta,,,ahora puedes crear un fichero n esa ruta y escribir lo k kieras...
+		}
+		}catch (Exception ex){
+		ex.printStackTrace();
+		} 
 			File file = new File("/home/dlara/Gitted/WebContent/g.gexf");
 			container = importController.importFile(file);
 			container.getLoader().setEdgeDefault(EdgeDefault.DIRECTED);
