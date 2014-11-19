@@ -21,10 +21,10 @@
 <body>
 <div id="BM">BigMarket</div><br>
 	<div id="nav">
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/index.html"><button type="button">Home</button></a>
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/parameters.jsp"><button type="button">Parameters</button></a>
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/results.jsp"><button type="button">Results</button></a>
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/show.jsp"><button type="button">Show</button></a>
+	<a href="http://localhost:8080/BigMarket/index.html"><button type="button">Home</button></a>
+	<a href="http://localhost:8080/BigMarket/parameters.jsp"><button type="button">Parameters</button></a>
+	<a href="http://localhost:8080/BigMarket/results.jsp"><button type="button">Results</button></a>
+	<a href="http://localhost:8080/BigMarket/show.jsp"><button type="button">Show</button></a>
 	
 	</div>
 <div id="script">
@@ -45,7 +45,7 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-d3.json("g.json", function(error, graph) {
+d3.json("NetworkGraph.json", function(error, graph) {
   force
       .nodes(graph.nodes)
       .links(graph.links)

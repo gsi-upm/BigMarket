@@ -3,13 +3,14 @@
 <%@ page import= "simulation.Simulation" %>
 <%@ page import= "simulation.Launcher" %> 
 <%@ page import= "simulation.util.Neo4JManageTool" %> 
+<%@ page import= "simulation.util.Constants" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<script>
 	function clickROS(){
-		document.actions.bPress.value="ros";
+		document.actions.bPress.value= "ros";
 	}
 	
 	function clickRun(){
@@ -45,10 +46,10 @@
 		
 	<div id="BM">BigMarket</div><br>
 	<div id="nav">
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/index.html"><button type="button">Home</button></a>
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/parameters.jsp"><button type="button">Parameters</button></a>
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/results.jsp"><button type="button">Results</button></a>
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/show.jsp"><button type="button">Show</button></a>
+	<a href="http://localhost:8080/BigMarket/index.html"><button type="button">Home</button></a>
+	<a href="http://localhost:8080/BigMarket/parameters.jsp"><button type="button">Parameters</button></a>
+	<a href="http://localhost:8080/BigMarket/results.jsp"><button type="button">Results</button></a>
+	<a href="http://localhost:8080/BigMarket/show.jsp"><button type="button">Show</button></a>
 	
 	</div>
 	<div id="steps">

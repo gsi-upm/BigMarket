@@ -10,3 +10,4 @@ manifest.mf
 RemoteSystemsTempFiles/
 /dist/
 /bin
+build

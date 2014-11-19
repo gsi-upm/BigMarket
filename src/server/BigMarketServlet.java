@@ -101,6 +101,7 @@ public class BigMarketServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = -7634769531465961909L;
+	
 	private Simulation sim;
 	private Neo4JManageTool neoDB;
 	private String datasetName;
@@ -119,34 +120,34 @@ public class BigMarketServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("bPress") != null){
-			if(request.getParameter("bPress").equals("ros")){	
+		if(request.getParameter(Constants.BUTTON_PRESSED) != null){
+			if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.RUN_ONE_STEP)){	
 				clickRunOneStep(request, response);
-			}else if(request.getParameter("bPress").equals("run")){
+			}else if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.RUN)){
 				clickRun(request, response);
-			}else if(request.getParameter("bPress").equals("pause")){
+			}else if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.PAUSE)){
 				clickPause(request, response);
 			}else{
 				clickStop(request, response);
 			}
-		}else if(request.getParameter("action") != null){
-			if(request.getParameter("action").equals("see")){
+		}else if(request.getParameter(Constants.ACTION_SELECTED) != null){
+			if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SEE_NETWORK)){
 				clickSeeNetwork(request, response);
-			}else if(request.getParameter("action").equals("results")){
+			}else if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SEE_RESULTS)){
 				String[] r = request.getParameterValues("resu");
 				List<String> results = Arrays.asList(r); 
-				if(results.contains("betweenness") && results.contains("closeness")){
+				if(results.contains(Constants.BETWEENNESS) && results.contains(Constants.CLOSENESS)){
 					calculateBetweenness(request, response);
 					calculateCloseness(request, response);
-					request.getRequestDispatcher("show.jsp").forward(request, response);
-				}else if(results.contains("betweenness") && !results.contains("closeness")){
+					request.getRequestDispatcher(Constants.SHOW_PAGE).forward(request, response);
+				}else if(results.contains(Constants.BETWEENNESS) && !results.contains(Constants.CLOSENESS)){
 					calculateBetweenness(request, response);
-					request.getRequestDispatcher("show.jsp").forward(request, response);
-				}else if(!results.contains("betweenness") && results.contains("closeness")){
+					request.getRequestDispatcher(Constants.SHOW_PAGE).forward(request, response);
+				}else if(!results.contains(Constants.BETWEENNESS) && results.contains(Constants.CLOSENESS)){
 					calculateCloseness(request, response);
-					request.getRequestDispatcher("show.jsp").forward(request, response);
+					request.getRequestDispatcher(Constants.SHOW_PAGE).forward(request, response);
 				}
-			}else if(request.getParameter("action").equals("save")){
+			}else if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SAVE)){
 				clickSave(request, response);
 			}else{
 				clickExport(request, response);
@@ -167,9 +168,9 @@ public class BigMarketServlet extends HttpServlet {
 			request.setAttribute("broadUsers",getBroadUsers(sim));
 			request.setAttribute("aqUsers", getAqUsers(sim));
 			request.setAttribute("oddUsers", getOddUsers(sim));
-			request.setAttribute("steps", sim.schedule.getSteps());
-			request.setAttribute("sim", sim);
-			request.getRequestDispatcher("parameters.jsp").forward(request, response);
+			request.setAttribute(Constants.STEPS, sim.schedule.getSteps());
+			request.setAttribute(Constants.SIM, sim);
+			request.getRequestDispatcher(Constants.PARAMETERS_PAGE).forward(request, response);
 		}else{
 			launchSimulation(request, response);
 		}
@@ -200,9 +201,9 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("broadUsers",getBroadUsers(sim));
 		request.setAttribute("aqUsers", getAqUsers(sim));
 		request.setAttribute("oddUsers", getOddUsers(sim));
-		request.setAttribute("steps", sim.schedule.getSteps());
-		request.setAttribute("sim", sim);
-		request.getRequestDispatcher("parameters.jsp").forward(request, response);
+		request.setAttribute(Constants.STEPS, sim.schedule.getSteps());
+		request.setAttribute(Constants.SIM, sim);
+		request.getRequestDispatcher(Constants.PARAMETERS_PAGE).forward(request, response);
 		
 		
 	
@@ -219,12 +220,12 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("broadUsers",getBroadUsers(sim));
 		request.setAttribute("aqUsers", getAqUsers(sim));
 		request.setAttribute("oddUsers", getOddUsers(sim));
-		request.setAttribute("steps", sim.schedule.getSteps());
-		request.setAttribute("sim", sim);
+		request.setAttribute(Constants.STEPS, sim.schedule.getSteps());
+		request.setAttribute(Constants.SIM, sim);
 		request.setAttribute("oddTweets", sim.getEventManager().getStatistics().getOddTweets());
 		request.setAttribute("broadTweets", sim.getEventManager().getStatistics().getBroadTweets());
 		request.setAttribute("acqTweets", sim.getEventManager().getStatistics().getAcqTweets());
-		request.getRequestDispatcher("parameters.jsp").forward(request, response);
+		request.getRequestDispatcher(Constants.PARAMETERS_PAGE).forward(request, response);
 	}
 	
 	private void clickRun(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -237,12 +238,12 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("broadUsers",getBroadUsers(sim));
 		request.setAttribute("aqUsers", getAqUsers(sim));
 		request.setAttribute("oddUsers", getOddUsers(sim));
-		request.setAttribute("steps", sim.schedule.getSteps());
-		request.setAttribute("sim", sim);
+		request.setAttribute(Constants.STEPS, sim.schedule.getSteps());
+		request.setAttribute(Constants.SIM, sim);
 		request.setAttribute("oddTweets", sim.getEventManager().getStatistics().getOddTweets());
 		request.setAttribute("broadTweets", sim.getEventManager().getStatistics().getBroadTweets());
 		request.setAttribute("acqTweets", sim.getEventManager().getStatistics().getAcqTweets());
-		request.getRequestDispatcher("parameters.jsp").forward(request, response);
+		request.getRequestDispatcher(Constants.PARAMETERS_PAGE).forward(request, response);
 		
 		
 	}
@@ -254,12 +255,12 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("broadUsers",getBroadUsers(sim));
 		request.setAttribute("aqUsers", getAqUsers(sim));
 		request.setAttribute("oddUsers", getOddUsers(sim));
-		request.setAttribute("steps", sim.schedule.getSteps());
-		request.setAttribute("sim", sim);
+		request.setAttribute(Constants.STEPS, sim.schedule.getSteps());
+		request.setAttribute(Constants.SIM, sim);
 		request.setAttribute("oddTweets", sim.getEventManager().getStatistics().getOddTweets());
 		request.setAttribute("broadTweets", sim.getEventManager().getStatistics().getBroadTweets());
 		request.setAttribute("acqTweets", sim.getEventManager().getStatistics().getAcqTweets());
-		request.getRequestDispatcher("parameters.jsp").forward(request, response);
+		request.getRequestDispatcher(Constants.PARAMETERS_PAGE).forward(request, response);
 	}
 	
 	private void clickStop(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -267,12 +268,12 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("broadUsers",getBroadUsers(sim));
 		request.setAttribute("aqUsers", getAqUsers(sim));
 		request.setAttribute("oddUsers", getOddUsers(sim));
-		request.setAttribute("steps", sim.schedule.getSteps());
-		request.setAttribute("sim", sim);
+		request.setAttribute(Constants.STEPS, sim.schedule.getSteps());
+		request.setAttribute(Constants.SIM, sim);
 		
 		sim.finish();
 		
-		request.getRequestDispatcher("results.jsp").forward(request, response);
+		request.getRequestDispatcher(Constants.RESULTS_PAGE).forward(request, response);
 	}
 	
 	private void clickSave(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -280,11 +281,11 @@ public class BigMarketServlet extends HttpServlet {
 		neoDB.setSim(sim);
 		neoDB.launchDatabaseTool();
 		
-		request.getRequestDispatcher("results.jsp").forward(request, response);
+		request.getRequestDispatcher(Constants.RESULTS_PAGE).forward(request, response);
 	}
 	
 	private void calculateBetweenness(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-		String path = "/home/dlara/Gitted/WebContent/g.gexf";
+		String path = Constants.GRAPH_PATH;
 		FileSinkGEXF2 out = new FileSinkGEXF2();
 		out.writeAll(sim.getGraphManager().getGraph(), path);
 		
@@ -359,12 +360,12 @@ public class BigMarketServlet extends HttpServlet {
 	    
 		request.setAttribute("bet", arrayBet);
 		request.setAttribute("betnodes", arrayNodes);
-		request.getRequestDispatcher("show.jsp").forward(request, response);
+		request.getRequestDispatcher(Constants.SHOW_PAGE).forward(request, response);
 
 	}
 	
 	private void calculateCloseness(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		String path = "/home/dlara/Gitted/WebContent/g.gexf";
+		String path = Constants.GRAPH_PATH;
 		FileSinkGEXF2 out = new FileSinkGEXF2();
 		out.writeAll(sim.getGraphManager().getGraph(), path);
 		
@@ -411,12 +412,12 @@ public class BigMarketServlet extends HttpServlet {
 	private void clickSeeNetwork(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		GraphJSONParser g = new GraphJSONParser(sim.getGraphManager().getGraph());
 		g.launchParser();
-		request.getRequestDispatcher("seeNet.html").forward(request, response);
+		request.getRequestDispatcher(Constants.SEE_NET_PAGE).forward(request, response);
 	}
 	
 	
 	private void clickExport(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		String path = "/home/dlara/Gitted/WebContent/g.gexf";
+		String path = Constants.GRAPH_PATH;
 		FileSinkGEXF2 out = new FileSinkGEXF2();
 		out.writeAll(sim.getGraphManager().getGraph(), path);
 		
@@ -436,7 +437,7 @@ public class BigMarketServlet extends HttpServlet {
 		}catch (Exception ex){
 		ex.printStackTrace();
 		} 
-			File file = new File("/home/dlara/Gitted/WebContent/g.gexf");
+			File file = new File(Constants.GRAPH_PATH);
 			container = importController.importFile(file);
 			container.getLoader().setEdgeDefault(EdgeDefault.DIRECTED);
 			container.setAllowAutoNode(false);
@@ -455,9 +456,9 @@ public class BigMarketServlet extends HttpServlet {
 		GraphExporter exporter = (GraphExporter) ec.getExporter("gexf");     //Get GEXF exporter
         exporter.setExportVisible(true);  //Only exports the visible (filtered) graph
         exporter.setWorkspace(workspace);
-        String path2 = "/home/dlara/Gitted/WebContent/g1.gexf";
+        String path2 = Constants.GRAPH1_PATH;
         try {
-            ec.exportFile(new File("/home/dlara/Gitted/WebContent/g1.gexf"), exporter);
+            ec.exportFile(new File(Constants.GRAPH1_PATH), exporter);
         } catch (IOException ex) {
             ex.printStackTrace();
             return;
@@ -483,7 +484,7 @@ public class BigMarketServlet extends HttpServlet {
             // Se obtiene el inputStream de la foto web y se abre el fichero
             // local.
             InputStream is = urlCon.getInputStream();
-            FileOutputStream fos = new FileOutputStream("/home/dlara/prueba.gexf");
+            FileOutputStream fos = new FileOutputStream(Constants.GRAPH_PRUEBA_PATH);
  
             // Lectura de la foto de la web y escritura en fichero local
             byte[] array = new byte[1000]; // buffer temporal de lectura.
@@ -500,7 +501,7 @@ public class BigMarketServlet extends HttpServlet {
             e.printStackTrace();
         }
         
-        request.getRequestDispatcher("results.jsp").forward(request, response);
+        request.getRequestDispatcher(Constants.RESULTS_PAGE).forward(request, response);
 	}
 	
 	

@@ -22,10 +22,10 @@ padding-right: 5%;
 </head>
 <div id="BM">BigMarket</div><br>
 <div id="nav">
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/index.html"><button type="button">Home</button></a>
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/parameters.jsp"><button type="button">Parameters</button></a>
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/results.jsp"><button type="button">Results</button></a>
-	<a href="http://simplez.gsi.dit.upm.es:8080/BigMarket/show.jsp"><button type="button">Show</button></a>
+	<a href="http://localhost:8080/BigMarket/index.html"><button type="button">Home</button></a>
+	<a href="http://localhost:8080/BigMarket/parameters.jsp"><button type="button">Parameters</button></a>
+	<a href="http://localhost:8080/BigMarket/results.jsp"><button type="button">Results</button></a>
+	<a href="http://localhost:8080/BigMarket/show.jsp"><button type="button">Show</button></a>
 	
 </div>
 <body>

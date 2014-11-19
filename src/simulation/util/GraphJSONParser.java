@@ -51,6 +51,7 @@ public class GraphJSONParser {
 	private Graph graph;
 	private JsonObject json;
 	private StringBuilder jsonString;
+	private FileWriter file;
 	
 	public GraphJSONParser(Graph g){
 		this.graph = g;
@@ -97,8 +98,7 @@ public class GraphJSONParser {
 		json = element.getAsJsonObject();
 		
 		try {
-			 
-			FileWriter file = new FileWriter("/home/dlara/Gitted/WebContent/g.json");
+			file = new FileWriter(Constants.JSON_GRAPH_PATH);
 			file.write(json.toString());
 			file.flush();
 			file.close();

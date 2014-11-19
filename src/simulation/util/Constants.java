@@ -38,9 +38,49 @@ package simulation.util;
 
 public class Constants {
 	
+	//Tipos usuarios
 	public static final String USER_TYPE_BROADCASTER = "Broadcaster";
 	public static final String USER_TYPE_ACQUAINTANCES = "Acquaintances";
 	public static final String USER_TYPE_ODDUSERS = "Odd users";
-
+	
+	//Acciones simulacion
+	public static final String RUN_ONE_STEP = "ros";
+	public static final String RUN = "run";
+	public static final String STOP = "stop";
+	public static final String PAUSE = "pause";
+	
+	//Rutas guardado de grafos
+	public static final String GRAPH_PATH = "C:/Users/dlaradie/PFC/grafos/g.gexf";
+	public static final String GRAPH1_PATH = "C:/Users/dlaradie/PFC/grafos/g1.gexf";
+	public static final String GRAPH_PRUEBA_PATH = "C:/Users/dlaradie/PFC/grafos/prueba.gexf";
+	
+	//Otras rutas
+	public static final String JSON_GRAPH_PATH = "C:/Users/dlaradie/git/BigMarket/WebContent/NetworkGraph.json";
+	
+	//Nombre de html y jsp
+	public static final String INDEX_PAGE = "index.html";
+	public static final String DATASETS_PAGE = "datasets.jsp";
+	public static final String NETWORK_PAGE = "network.html";
+	public static final String PARAMETERS_PAGE = "parameters.jsp";
+	public static final String RESULTS_PAGE = "results.jsp";
+	public static final String RUNNINGSCREEN_PAGE = "runningScreen.html";
+	public static final String SEE_NET_PAGE = "seeNet.html";
+	public static final String SHOW_PAGE = "show.jsp";
+	
+	//Otras constantes
+	public static final String BUTTON_PRESSED = "bPress";
+	
+	public static final String STEPS = "steps";
+	public static final String SIM = "sim";
+	public static final String NODES = "nodes";
+	public static final String BETWEENNESS = "betweenness";
+	public static final String CLOSENESS = "closeness";
+	
+	//Acciones en el jsp de results
+	public static final String ACTION_SELECTED = "action";
+	public static final String SEE_RESULTS = "results";
+	public static final String SEE_NETWORK = "see";
+	public static final String SAVE = "save";
+	
 
 }
