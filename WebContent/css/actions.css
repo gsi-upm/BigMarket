@@ -9,18 +9,6 @@ body {
   border-top: 2px solid #337AB7;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  background-color: transparent;
-  padding-bottom: 5px;
-}
-
-.jumbotron {
-  font-weight: 0 !important;
-  font-size: 14px !important;
-}
-
 
 
 /* Customize the nav-justified links to be fill the entire space of the .navbar */
@@ -98,9 +86,66 @@ body {
 
 .row{
   text-align : justify;
-  margin-top: 0px;
-  padding-top: 0px;
-  margin-right: 0px;
-  margin-left: 0px;
-  border-radius: 0px;
+  margin-top: 40px !important;
+  margin-bottom: 150px;
+}
+
+.form-control{
+  width: 50%;
+}
+
+.col-lg-4{
+  width: 50% !important;
+}
+
+#col-left{
+  border-right: 2px dotted #337AB7;
+  padding-left: 175px;
+}
+
+#col-right{
+  padding-left: 100px;
+}
+
+.setup-button{
+  padding-top: 30px;
+  padding-bottom: 12px;
+}
+
+#scroll {
+    border-spacing: 0;
+    height: 150px;
+    
+}
+
+#scroll tbody{ 
+   
+  width: 100%;
+}
+
+table{
+  height: 100px;
+}
+tr th { 
+    height: 30px;
+    line-height: 30px;
+}
+
+#scroll tbody {
+    height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+tbody td{
+    border-right: 1px solid #DDDDDD;
+}
+
+tbody td:last-child {
+    border-right: none;
+}
+
+#menu{
+  margin-bottom: 15px;
 }

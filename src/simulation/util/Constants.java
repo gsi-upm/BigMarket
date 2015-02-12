@@ -50,22 +50,19 @@ public class Constants {
 	public static final String PAUSE = "pause";
 	
 	//Rutas guardado de grafos
-	public static final String GRAPH_PATH = "C:/Users/dlaradie/PFC/grafos/g.gexf";
-	public static final String GRAPH1_PATH = "C:/Users/dlaradie/PFC/grafos/g1.gexf";
-	public static final String GRAPH_PRUEBA_PATH = "C:/Users/dlaradie/PFC/grafos/prueba.gexf";
+	public static final String GRAPH_PATH = "C:/Users/dlaradie/git/BigMarket/WebContent/grafoInicial.gexf";
+	public static final String GRAPH1_PATH = "C:/Users/dlaradie/git/BigMarket/WebContent/grafoPaso2.gexf";
+	public static final String GRAPH_PRUEBA_PATH = "C:/Users/dlaradie/git/BigMarket/WebContent/grafoFinal.gexf";
 	
 	//Otras rutas
 	public static final String JSON_GRAPH_PATH = "C:/Users/dlaradie/git/BigMarket/WebContent/NetworkGraph.json";
 	
 	//Nombre de html y jsp
 	public static final String INDEX_PAGE = "index.html";
-	public static final String DATASETS_PAGE = "datasets.jsp";
-	public static final String NETWORK_PAGE = "network.html";
-	public static final String PARAMETERS_PAGE = "parameters.jsp";
-	public static final String RESULTS_PAGE = "results.jsp";
-	public static final String RUNNINGSCREEN_PAGE = "runningScreen.html";
-	public static final String SEE_NET_PAGE = "seeNet.html";
-	public static final String SHOW_PAGE = "show.jsp";
+	public static final String SETUP_PAGE = "setup.html";
+	public static final String RUNNING_PAGE = "running.html";
+	public static final String ACTIONS_PAGE = "actions.html";
+	public static final String CONTACT_PAGE = "contact.html";
 	
 	//Otras constantes
 	public static final String BUTTON_PRESSED = "bPress";

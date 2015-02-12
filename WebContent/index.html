@@ -1,87 +1,56 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<script>
-	function randomEn(){
-		document.randomForm.nodes.disabled=false;
-		document.randomForm.load.disabled=true;
-		document.randomForm.create.disabled=true;
-	}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
 
-	function datasetEn(){
-		document.randomForm.nodes.disabled=true;
-		document.randomForm.nodes.value=0;
-		document.randomForm.load.disabled=false;
-		document.randomForm.create.disabled=false;
-	}
+    <title>BigMarket</title>
 
-	function createClick(){
-		window.open('http://localhost:7474/browser','_blank');
-	}
-	
-	function loadClick(){
-		if(document.randomForm.bbddId.value == ""){
-			alert("Please introduce a valid bbdd identifier");
-		}else{
-			document.randomForm.loadPushed.value="ok";
-		}
-	}
-	
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-</script>
-	<meta charset="UTF-8">	
-	<link rel="stylesheet" type="text/css" href="css/index.css">
-	<title>BigMarket</title>
-</head>
+    <!-- Custom styles for this template -->
+    <link href="css/index.css" rel="stylesheet">
 
-<body link="white" alink="white" vlink="white">
+  </head>
 
+  <body>
 
-	<div id="BM">BigMarket</div><br>
-	<div id="nav">
-	<a href="http://localhost:8080/BigMarket/index.html"><button type="button">Home</button></a>
-	<a href="http://localhost:8080/BigMarket/parameters.jsp"><button type="button">Parameters</button></a>
-	<a href="http://localhost:8080/BigMarket/results.jsp"><button type="button">Results</button></a>
-	<a href="http://localhost:8080/BigMarket/show.jsp"><button type="button">Show</button></a>
-	
-	</div>
-	<div id="radioButtons">
-	<p><input type="radio" name="choose" value="random" onclick="randomEn()">Random Network 
-	<input type="radio" name="choose" value="dataset" onclick="datasetEn()">Network based on dataset</p>
-	</div>
+    <div class="container">
 
+      <div class="masthead">
+        <img src="img/logo2.png" height="70px">
+        <img src="img/logo_gsi_final.svg" class="pull-right" width=6% float="right">
+        <nav>
+          <ul class="nav nav-justified">
+            <li class="active"><a href="index.html">About BigMarket</a></li>
+            <li><a href="setup.html">Set up Simulation</a></li>
+            <li><a href="running.html">Running</a></li>
+            <li><a href="actions.html">Actions</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
 
-	<div id="randomForm">
+      <!-- Jumbotron -->
+      <div class="jumbotron">
+        <img src="img/a.png">
+      </div>
 
-	<form name="randomForm" method="POST" action="BigMarketServlet">
-	Enter a name for the simulation:<input type="text" value="" name="DataId">
-		<div id="nodes">
-			<p>Nodes <input type="text" name="nodes" style="width: 70px;" disabled="true" value="0"></p>
-		</div>
+      <div class="row">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ligula arcu, efficitur vitae cursus vel, efficitur vitae tortor. Suspendisse vulputate venenatis metus, ac elementum tortor tincidunt et. Sed condimentum finibus nisi. Cras vestibulum bibendum feugiat. Donec id sollicitudin ante. Sed diam sapien, porttitor sed condimentum a, semper nec augue. Nullam ullamcorper ut ligula eu viverra. Donec malesuada lorem vel lorem malesuada sollicitudin. Vivamus est augue, varius vitae magna nec, suscipit placerat tellus. Suspendisse nec fringilla quam, a efficitur ipsum. Proin ut mauris molestie, dapibus quam in, scelerisque neque. Quisque in nibh nisi. Curabitur ut condimentum ligula. Duis ac condimentum nisl. Ut tempus, lorem quis viverra gravida, lectus lacus pulvinar ex, ac blandit ipsum nulla eu mi. Nulla id varius odio.</p>
+        <p align="center"><a class="btn btn-primary" href="setup.html" role="button">START »</a></p>
+      </div>
 
-	<div id="dataset">
-		<a href="datasets.jsp"> See the datasets avalaible </a>
-		Dataset Identifier:<input type="text" value="" name="bbddId">
-			<input type="button" value="Load Graph" name="load" disabled="true" onclick="loadClick()"> <input type="button" value="Create Network" name="create" disabled="true" onclick="createClick()">
-	</div>
-	<input type="hidden" value="" name="loadPushed">
-	<div id="button">
-		<input type="submit" value="Set up" name="submit">
-	</div>
+      <!-- Site footer -->
+      <footer class="footer">
+        <p>&copy;Grupo de Sistemas Inteligentes GSI-UPM </p>
+      </footer>
 
-	</form>
-	
-	</div>
-
-	<div id="footer">
-	<hr>
-		<ul>
-  			<li>Daniel Lara Diezma Grupo de Sistemas Inteligentes.</li>
-  			<li>Emilio Serrano Fernández Grupo de Sistemas Inteligentes.</li>
-  			<li>Carlos Ángel Iglesias Fernández Grupo de Sistemas Inteligentes.</li>
-		</ul> 		
-	</div>
-
-</body>
-
+    </div>
+  </body>
 </html>
