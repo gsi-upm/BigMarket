@@ -62,55 +62,82 @@ public class GraphJSONParser {
 	public void parser(){
 		int a = 1;
 		int b = 1;
-		jsonString.append("{" + "\n" + "\"nodes\":[" + "\n");
+		
+		jsonString.append("{" + "\n" + "\"nodes\": [" + "\n");
 		for(Node n : graph.getNodeSet()){
 			String s = n.getId();
+			int posX = (int) (Math.random()*graph.getNodeCount());
+			int posY = (int) (Math.random()*graph.getNodeCount());
 			if(a < graph.getNodeSet().size()){
-				String s2 = "{\"name\":\"" + s + "\"}," + "\n";
+				String s2 = "{ " + "\n" + "\"id\": \"" + s + "\"," + "\n" +
+						"\"label\": \"" + s + "\"," + "\n" +
+						"\"x\": " + posX + "," + "\n" +
+						"\"y\": " + posY + "," + "\n" +
+						"\"size\": " + (n.getInDegree() + 3)*2  + "\n" +
+						"},";
 				jsonString.append(s2);
 			}else{
-				String s2 = "{\"name\":\"" + s + "\"}" + "\n";
+				String s2 = "{ " + "\n" + "\"id\": \"" + s + "\"," + "\n" +
+						"\"label\": \"" + s + "\"," + "\n" +
+						"\"x\": " + posX + "," + "\n" +
+						"\"y\": " + posY + "," + "\n" +
+						"\"size\": " + (n.getInDegree() + 3)*2  + "\n" +
+						"}" + "\n";
 				jsonString.append(s2);
 			}
 			a++;
 		}
-		
-		jsonString.append("],\"links\":[");
+		String q = "]," + "\n" +
+				"\"edges\": [" + "\n";
+		jsonString.append(q);
 		for(Edge e: graph.getEdgeSet()){
 			int n = e.getSourceNode().getIndex();
 			int n2 = e.getTargetNode().getIndex();
+			Node source = e.getSourceNode();
+			Node target = e.getTargetNode();
 			if(b < graph.getEdgeSet().size()){
-				jsonString.append("{\"source\":" + n + ",\"target\":" + n2 + "}," + "\n");
+				String h = "{" + "\n" +
+						"\"id\": \"" + e.getId() + "\"," + "\n" +
+						"\"source\": \"" + source.getId() +  "\"," + "\n" +
+						"\"target\": \"" + target.getId() + "\"" + "\n" +
+						"}," + "\n";		
+				jsonString.append(h);
 			}else{
-				jsonString.append("{\"source\":" + n + ",\"target\":" + n2 + "}" +"\n");
+				String h = "{" + "\n" +
+						"\"id\": \"" + e.getId() + "\"," + "\n" +
+						"\"source\": \"" + source.getId() +  "\"," + "\n" +
+						"\"target\": \"" + target.getId() + "\"" + "\n" +
+						"}" + "\n";	
+				jsonString.append(h);
 			}
 			b++;
 		}
-		jsonString.append("]}");
+		String w = "]" + "\n" + "}";
+		jsonString.append(w);
 		
 		System.out.println(jsonString.toString());
 	}
 	
-	private void finalParser(){
-		Gson gson = new Gson();
+	private void finalParser(String path){
+//		Gson gson = new Gson();
 		String s = jsonString.toString();
-		JsonElement element = gson.fromJson (s, JsonElement.class);
-		json = element.getAsJsonObject();
+//		JsonElement element = gson.fromJson (s, JsonElement.class);
+//		json = element.getAsJsonObject();
 		
 		try {
-			file = new FileWriter(Constants.JSON_GRAPH_PATH);
-			file.write(json.toString());
+			file = new FileWriter(path);
+			file.write(s);
 			file.flush();
 			file.close();
-			 
+			System.out.println("File saved");
 			} catch (IOException e) {
 			//manejar error
 			}
 	}
 	
-	public void launchParser(){
+	public void launchParser(String path){
 		this.parser();
-		this.finalParser();
+		this.finalParser(path);
 	}
 	
 	public JsonObject getJson(){

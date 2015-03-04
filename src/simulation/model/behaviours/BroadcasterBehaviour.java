@@ -115,10 +115,10 @@ public class BroadcasterBehaviour extends UserModel{
 		double percentage = 0.0;
 		enteredEdges = user.getFollowers().size();
 		percentage = enteredEdges/totalEdges;
-			if(percentage >= 0.00275){
+			if(percentage >= 0.3){ //0.00275
 				user.setType(Constants.USER_TYPE_BROADCASTER);
 				//System.out.println("EL usuario " + user.getUserName() + " es un " + Constants.USER_TYPE_BROADCASTER);
-			}else if(0.00275 > percentage &&  percentage >= 0.000121){
+			}else if(0.3 > percentage &&  percentage >= 0.1){ //0.00275 && 0.000121
 				user.setType(Constants.USER_TYPE_ACQUAINTANCES);
 				//System.out.println("EL usuario " + user.getUserName() + " es un " + Constants.USER_TYPE_ACQUAINTANCES);
 			}else{

@@ -87,6 +87,7 @@ import org.openide.util.Lookup;
 
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
+import scala.collection.immutable.Stream.Cons;
 import simulation.Launcher;
 import simulation.Simulation;
 import simulation.model.User;
@@ -149,7 +150,7 @@ public class BigMarketServlet extends HttpServlet {
 					request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
 				}
 			}else if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SAVE)){
-				clickSave(request, response);
+//				clickSave(request, response);
 			}else{
 				clickExport(request, response);
 			}
@@ -173,7 +174,7 @@ public class BigMarketServlet extends HttpServlet {
 			request.setAttribute(Constants.SIM, sim);
 			request.getRequestDispatcher(Constants.SETUP_PAGE).forward(request, response);
 		}else{
-			launchSimulation(request, response);
+			launchSimulation(request, response, 1, "AA");
 		}
 		
 	}
@@ -182,29 +183,25 @@ public class BigMarketServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);	
+		doGetB(request, response);	
 	}
 	
-	private void launchSimulation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-			sim = new Simulation(System.currentTimeMillis());
-			sim.setFlag(1);
-			if(Integer.parseInt(request.getParameter("nodes")) != 0){
-				int numberOfNodes = Integer.parseInt(request.getParameter("nodes"));		
-				sim.setNumberOfNodes(numberOfNodes);
-				String data = request.getParameter("DataId");
-				sim.setSimDataSet(data);
-			}else{
-			}
+	private void launchSimulation(HttpServletRequest request, HttpServletResponse response, int numNodes,
+			String networkName) throws ServletException, IOException{
+		sim = new Simulation(System.currentTimeMillis());
+		sim.setFlag(1);		
+		sim.setNumberOfNodes(numNodes);
+		sim.setSimDataSet(networkName);
 				
 		Launcher launcher = new Launcher(sim);
 		launcher.start();
 		
 		request.setAttribute("broadUsers",getBroadUsers(sim));
-		request.setAttribute("aqUsers", getAqUsers(sim));
+		request.setAttribute("acqUsers", getAqUsers(sim));
 		request.setAttribute("oddUsers", getOddUsers(sim));
 		request.setAttribute(Constants.STEPS, sim.schedule.getSteps());
 		request.setAttribute(Constants.SIM, sim);
-		request.getRequestDispatcher(Constants.SETUP_PAGE).forward(request, response);
+		request.getRequestDispatcher(Constants.RUNNING_PAGE).forward(request, response);
 		
 		
 	
@@ -226,7 +223,7 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("oddTweets", sim.getEventManager().getStatistics().getOddTweets());
 		request.setAttribute("broadTweets", sim.getEventManager().getStatistics().getBroadTweets());
 		request.setAttribute("acqTweets", sim.getEventManager().getStatistics().getAcqTweets());
-		request.getRequestDispatcher(Constants.SETUP_PAGE).forward(request, response);
+		request.getRequestDispatcher(Constants.RUNNING_PAGE).forward(request, response);
 	}
 	
 	private void clickRun(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -244,7 +241,7 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("oddTweets", sim.getEventManager().getStatistics().getOddTweets());
 		request.setAttribute("broadTweets", sim.getEventManager().getStatistics().getBroadTweets());
 		request.setAttribute("acqTweets", sim.getEventManager().getStatistics().getAcqTweets());
-		request.getRequestDispatcher(Constants.SETUP_PAGE).forward(request, response);
+		request.getRequestDispatcher(Constants.RUNNING_PAGE).forward(request, response);
 		
 		
 	}
@@ -261,7 +258,7 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute("oddTweets", sim.getEventManager().getStatistics().getOddTweets());
 		request.setAttribute("broadTweets", sim.getEventManager().getStatistics().getBroadTweets());
 		request.setAttribute("acqTweets", sim.getEventManager().getStatistics().getAcqTweets());
-		request.getRequestDispatcher(Constants.SETUP_PAGE).forward(request, response);
+		request.getRequestDispatcher(Constants.RUNNING_PAGE).forward(request, response);
 	}
 	
 	private void clickStop(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -273,17 +270,22 @@ public class BigMarketServlet extends HttpServlet {
 		request.setAttribute(Constants.SIM, sim);
 		
 		sim.finish();
-		
-		request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
-	}
-	
-	private void clickSave(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-	
 		neoDB.setSim(sim);
 		neoDB.launchDatabaseTool();
+		GraphJSONParser g = new GraphJSONParser(sim.getGraphManager().getGraph());
+		String path = getServletContext().getRealPath("/") + "networkGraph.json";
+		g.launchParser(path);
 		
 		request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
 	}
+	
+//	private void clickSave(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+//	
+//		neoDB.setSim(sim);
+//		neoDB.launchDatabaseTool();
+//		
+//		request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
+//	}
 	
 	private void calculateBetweenness(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		String path = Constants.GRAPH_PATH;
@@ -412,7 +414,7 @@ public class BigMarketServlet extends HttpServlet {
 	
 	private void clickSeeNetwork(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		GraphJSONParser g = new GraphJSONParser(sim.getGraphManager().getGraph());
-		g.launchParser();
+		g.launchParser("A");
 		request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
 	}
 	
@@ -590,7 +592,97 @@ public class BigMarketServlet extends HttpServlet {
 		return result;
 	}
 	
+	protected void doGetA(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter(Constants.BUTTON_PRESSED) != null){
+			if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.RUN_ONE_STEP)){	
+				clickRunOneStep(request, response);
+			}else if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.RUN)){
+				clickRun(request, response);
+			}else if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.PAUSE)){
+				clickPause(request, response);
+			}else{
+				clickStop(request, response);
+			}
+		}else if(request.getParameter(Constants.ACTION_SELECTED) != null){
+			if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SEE_NETWORK)){
+				clickSeeNetwork(request, response);
+			}else if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SEE_RESULTS)){
+				String[] r = request.getParameterValues("resu");
+				List<String> results = Arrays.asList(r); 
+				if(results.contains(Constants.BETWEENNESS) && results.contains(Constants.CLOSENESS)){
+					calculateBetweenness(request, response);
+					calculateCloseness(request, response);
+					request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
+				}else if(results.contains(Constants.BETWEENNESS) && !results.contains(Constants.CLOSENESS)){
+					calculateBetweenness(request, response);
+					request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
+				}else if(!results.contains(Constants.BETWEENNESS) && results.contains(Constants.CLOSENESS)){
+					calculateCloseness(request, response);
+					request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
+				}
+			}else if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SAVE)){
+//				clickSave(request, response);
+			}else{
+				clickExport(request, response);
+			}
+		
+		}else if(request.getParameter("loadPushed").equals("ok")){
+			System.out.println("HE PULSADO CARGAR");
+			Neo4JManageTool n = new Neo4JManageTool();
+			n.launchLoad(request.getParameter("bbddId"));
+			sim = new Simulation(System.currentTimeMillis());
+			sim.setDataBase(n);
+			sim.setFlag(2);
+			String data = request.getParameter("DataId");
+			sim.setSimDataSet(data);
+			Launcher launcher = new Launcher(sim);
+			launcher.start();
+			
+			request.setAttribute("broadUsers",getBroadUsers(sim));
+			request.setAttribute("acqUsers", getAqUsers(sim));
+			request.setAttribute("oddUsers", getOddUsers(sim));
+			request.setAttribute(Constants.STEPS, sim.schedule.getSteps());
+			request.setAttribute(Constants.SIM, sim);
+			request.getRequestDispatcher(Constants.SETUP_PAGE).forward(request, response);
+		}else{
+			launchSimulation(request, response, 1, "AA");
+		}
+		
+	}
 	
+	protected void doGetB(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String formName = request.getParameter(Constants.FORM_NAME);
+		if(formName.equals(Constants.SETUP_FORM_NAME)){
+			String radioButtons = request.getParameter(Constants.RADIO_BUTTONS_NAME);
+			if(radioButtons.equals(Constants.RANDOM_SELECTED)){
+				int numberOfNodes = Integer.parseInt(request.getParameter(Constants.NUMBER_OF_NODES));
+				String randomNetworkName = request.getParameter(Constants.RANDOM_NETWORK_NAME);	
+				launchSimulation(request, response, numberOfNodes, randomNetworkName);
+			}else if(radioButtons.equals(Constants.LOAD_SELECTED)){
+				Neo4JManageTool n = new Neo4JManageTool();
+				String datasetIdentifier = request.getParameter(Constants.DATASET_IDENTIFIER);
+				n.launchLoad(datasetIdentifier);
+				sim = new Simulation(System.currentTimeMillis());
+				sim.setDataBase(n);
+				sim.setFlag(2);
+				String newName = request.getParameter(Constants.NEW_LOAD_NETWORK_NAME);
+				sim.setSimDataSet(newName);
+				Launcher launcher = new Launcher(sim);
+				launcher.start();
+			}
+		}else if(formName.equals(Constants.RUNNING_FORM_NAME)){
+			String actionSelected = request.getParameter(Constants.ACTION_SELECTED);
+			if(actionSelected.equals(Constants.RUN_ONE_STEP)){	
+				clickRunOneStep(request, response);
+			}else if(actionSelected.equals(Constants.RUN)){
+				clickRun(request, response);
+			}else if(actionSelected.equals(Constants.PAUSE)){
+				clickPause(request, response);
+			}else{
+				clickStop(request, response);
+			}
+		}
+	}
 	
 	
 

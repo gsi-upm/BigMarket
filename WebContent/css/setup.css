@@ -121,12 +121,13 @@ p{
 }
 
 #col-left{
-  border-right: 2px dotted #337AB7;
+  
   padding-left: 175px;
 }
 
 #col-right{
   padding-left: 175px;
+  border-left: 2px dotted #337AB7;
 }
 
 .setup-button{

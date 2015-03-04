@@ -37,6 +37,8 @@
       </div>
 
       <!-- Jumbotron -->
+    <form action="BigMarketServlet" method="POST" name="setup-form">
+      <input type="hidden" name="formName" value="setupForm"/>
       <div class="jumbotron">
 
         <h4>Select an option:</h4>
@@ -47,18 +49,22 @@
       <div class="row">
         <div class="col-lg-4" id="col-left">
           <h4>New random network</h4>
-          <p>Number of initial nodes: <input type="text" class="form-control" id="numNodes" disabled="true"></p>
-          <p>Simulation name: <input type="text" class="form-control" id="nameRandom" disabled="true"></p>
+          <p>Number of initial nodes: <input type="text" class="form-control" id="numNodes" name="numNodes" disabled="true"></p>
+          <p></p>
+          <p>Simulation name: <input type="text" class="form-control" id="nameRandom" name="nameRandom" disabled="true"></p>
         </div>
         <div class="col-lg-4" id="col-right">
           <h4>Load network from DataBase</h4>
-          <p>Dataset identifier: <input type="text" class="form-control" id="datasetIdentifier" disabled="true"></p>
-          <p><input type="button" class="btn btn-primary" value="Load network" id="loadButton" disabled="true"> <input type="button" class="btn btn-primary" value="Create network" id="createButton" disabled="true" onclick="createNetwork()"></p>
+          <p>Dataset identifier: <input type="text" class="form-control" id="datasetIdentifier" name="dataset" disabled="true"></p>
+          <p>New name for simulation:
+          <input type="text" class="form-control" id="newLoadName" name="newLoadName" disabled="true"></p> 
+          <p><input type="button" class="btn btn-primary" value="Create network" id="createButton" disabled="true" onclick="createNetwork()"></p>
         </div>
       </div>
       <div class="setup-button">
-        <p align="center"><a class="btn btn-primary" href="#" role="button">Setup!</a></p>
+        <p align="center"><button type="submit" class="btn btn-primary" id="submitButton">Setup!</button></p>
       </div>
+    </form>
       <!-- Site footer -->
       <footer class="footer">
         <p>&copy;Grupo de Sistemas Inteligentes GSI-UPM </p>

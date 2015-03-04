@@ -1,0 +1,9 @@
+Implementar el complemento javascript para ver los nombres de simulación disponibles
+
+Implementar la funcionalidad del boton de see network para visualizar la red
+
+Implementar el boton export network para exportar la red en un fichero gexf
+
+Finalizar la simulación al pulsar el botón stop para poder relanzar otra.
+
+Tabla de datos de medidas
