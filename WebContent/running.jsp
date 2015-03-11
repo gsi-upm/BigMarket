@@ -45,7 +45,7 @@
           <ul class="nav nav-justified">
             <li><a href="index.html">About BigMarket</a></li>
             <li><a href="setup.html">Set up Simulation</a></li>
-            <li class="active"><a href="running.html">Running</a></li>
+            <li class="active"><a href="running.jsp">Running</a></li>
             <li><a href="actions.html">Actions</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>

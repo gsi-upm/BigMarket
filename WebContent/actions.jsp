@@ -1,3 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import= "simulation.Simulation" %>
+<%@ page import= "simulation.Launcher" %> 
+<%@ page import= "simulation.util.Neo4JManageTool" %> 
+<%@ page import= "simulation.util.Constants" %>
+<%@ page import="java.util.SortedMap" %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,7 +28,12 @@
   </head>
 
   <body>
-
+  <%
+      Double[] bet = (Double[])request.getAttribute("bet");
+      int[] betnodes = (int[])request.getAttribute("betnodes");
+      SortedMap<Integer, Double> close = (SortedMap<Integer, Double>)request.getAttribute("close");
+      
+    %>
     <div class="container">
 
       <div class="masthead">
@@ -62,29 +75,22 @@
                 <th>Node</th>
                 <th>Meassure</th>
               </tr>
-              <tr>
-                <td>XXXX</td>
-                <td>XXXX</td>
-              </tr>
-              <tr>
-                <td>XXXX</td>
-                <td>XXXX</td>
-              </tr>
-              <tr>
-                <td>XXXX</td>
-                <td>XXXX</td>
-              </tr>
-              <tr>
-                <td>XXXX</td>
-                <td>XXXX</td>
-              </tr>
+              <%
+                int i=0;
+                for(i=0;i<betnodes.length;i++){
+                out.print("<tr>");
+                out.print("<td>"+betnodes[i]+"</td>");
+                out.print("<td><"+bet[i]+"></td>");
+                out.print("</tr>");
+                }
+              %>
           </table>
         </div>
         <div class="col-lg-4" id="col-right">
           <h4>See the graph of the network</h4>
           <p><input type="button" class="btn btn-primary" value="See network" id="seeNetworkButton" onclick="seeNetwork()"></p>
           <h4>Export the graph in a .gexf file</h4>
-          <a class="btn btn-lg btn-primary" width="15px" href="graph.gexf" download="Graph.gexf" role="button">Download graph</a>
+          <a class="btn btn-lg btn-primary" width="15px" href="grafoInicial.gexf" download="grafoInicial.gexf" role="button">Download graph</a>
         </div>
       </div>
 

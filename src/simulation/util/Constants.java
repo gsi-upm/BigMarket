@@ -49,21 +49,16 @@ public class Constants {
 	public static final String STOP = "stop";
 	public static final String PAUSE = "pause";
 	
-	//Rutas guardado de grafos
-	public static final String GRAPH_PATH = "C:/Users/dlaradie/git/BigMarket/WebContent/grafoInicial.gexf";
-	public static final String GRAPH1_PATH = "C:/Users/dlaradie/git/BigMarket/WebContent/grafoPaso2.gexf";
-	public static final String GRAPH_PRUEBA_PATH = "C:/Users/dlaradie/git/BigMarket/WebContent/grafoFinal.gexf";
 	
 	//Otras rutas
 	public static final String JSON_GRAPH_PATH = "NetworkGraph.json";
-	//C:\Users\dlaradie\PFC\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\BigMarket
 	
 	
 	//Nombre de html y jsp
 	public static final String INDEX_PAGE = "index.html";
 	public static final String SETUP_PAGE = "setup.html";
 	public static final String RUNNING_PAGE = "running.jsp";
-	public static final String ACTIONS_PAGE = "actions.html";
+	public static final String ACTIONS_PAGE = "actions.jsp";
 	public static final String CONTACT_PAGE = "contact.html";
 	
 	//Otras constantes

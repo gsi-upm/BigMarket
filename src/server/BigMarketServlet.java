@@ -119,67 +119,6 @@ public class BigMarketServlet extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter(Constants.BUTTON_PRESSED) != null){
-			if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.RUN_ONE_STEP)){	
-				clickRunOneStep(request, response);
-			}else if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.RUN)){
-				clickRun(request, response);
-			}else if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.PAUSE)){
-				clickPause(request, response);
-			}else{
-				clickStop(request, response);
-			}
-		}else if(request.getParameter(Constants.ACTION_SELECTED) != null){
-			if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SEE_NETWORK)){
-				clickSeeNetwork(request, response);
-			}else if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SEE_RESULTS)){
-				String[] r = request.getParameterValues("resu");
-				List<String> results = Arrays.asList(r); 
-				if(results.contains(Constants.BETWEENNESS) && results.contains(Constants.CLOSENESS)){
-					calculateBetweenness(request, response);
-					calculateCloseness(request, response);
-					request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
-				}else if(results.contains(Constants.BETWEENNESS) && !results.contains(Constants.CLOSENESS)){
-					calculateBetweenness(request, response);
-					request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
-				}else if(!results.contains(Constants.BETWEENNESS) && results.contains(Constants.CLOSENESS)){
-					calculateCloseness(request, response);
-					request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
-				}
-			}else if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SAVE)){
-//				clickSave(request, response);
-			}else{
-				clickExport(request, response);
-			}
-		
-		}else if(request.getParameter("loadPushed").equals("ok")){
-			System.out.println("HE PULSADO CARGAR");
-			Neo4JManageTool n = new Neo4JManageTool();
-			n.launchLoad(request.getParameter("bbddId"));
-			sim = new Simulation(System.currentTimeMillis());
-			sim.setDataBase(n);
-			sim.setFlag(2);
-			String data = request.getParameter("DataId");
-			sim.setSimDataSet(data);
-			Launcher launcher = new Launcher(sim);
-			launcher.start();
-			
-			request.setAttribute("broadUsers",getBroadUsers(sim));
-			request.setAttribute("aqUsers", getAqUsers(sim));
-			request.setAttribute("oddUsers", getOddUsers(sim));
-			request.setAttribute(Constants.STEPS, sim.schedule.getSteps());
-			request.setAttribute(Constants.SIM, sim);
-			request.getRequestDispatcher(Constants.SETUP_PAGE).forward(request, response);
-		}else{
-			launchSimulation(request, response, 1, "AA");
-		}
-		
-	}
-
-	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -275,21 +214,16 @@ public class BigMarketServlet extends HttpServlet {
 		GraphJSONParser g = new GraphJSONParser(sim.getGraphManager().getGraph());
 		String path = getServletContext().getRealPath("/") + "networkGraph.json";
 		g.launchParser(path);
-		
+		exportGraphGEXF();
+		calculateCloseness(request, response);
+		calculateBetweenness(request, response);
 		request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
 	}
 	
-//	private void clickSave(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-//	
-//		neoDB.setSim(sim);
-//		neoDB.launchDatabaseTool();
-//		
-//		request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
-//	}
 	
 	private void calculateBetweenness(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-		String path = Constants.GRAPH_PATH;
-		FileSinkGEXF2 out = new FileSinkGEXF2();
+		String path = getServletContext().getRealPath("/") + "grafoInicial.gexf";
+		FileSinkGEXF out = new FileSinkGEXF();
 		out.writeAll(sim.getGraphManager().getGraph(), path);
 		
 		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
@@ -328,23 +262,11 @@ public class BigMarketServlet extends HttpServlet {
 		List<Integer> finalNodes = new ArrayList<Integer>();
 		for(Node n : graphModel.getGraph().getNodes()) {
 			 Double centrality = (Double)n.getNodeData().getAttributes().getValue(col.getTitle());
-			 System.out.println("Node " + n.getId() + " betweeness " + centrality);
+//			 System.out.println("Node " + n.getId() + " betweeness " + centrality);
 			 bet.put(centrality, n.getId());
 		}
 		List<Double> betPerNode = new ArrayList<Double>(bet.keySet());
 
-	    Collections.sort(betPerNode, new Comparator<Double>() {
-
-			@Override
-			public int compare(Double o1, Double o2) {
-				// TODO Auto-generated method stub
-				return (int) (o1-o2);
-			}
-
-			
-	    });
-	    
-	    java.util.Collections.reverse(betPerNode);
     
 	    for(double p : betPerNode){
 	    	finalBet.add(p);
@@ -360,16 +282,16 @@ public class BigMarketServlet extends HttpServlet {
 	    for(int j = 0; j < arrayNodes.length; j++){
 	    	arrayNodes[j] = finalNodes.get(j);
 	    }
-	    
+	    System.out.println("Size bet " + arrayBet.length);
+	    System.out.println("Size betnodes " + arrayNodes.length);
 		request.setAttribute("bet", arrayBet);
 		request.setAttribute("betnodes", arrayNodes);
-		request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
 
 	}
 	
 	private void calculateCloseness(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		String path = Constants.GRAPH_PATH;
-		FileSinkGEXF2 out = new FileSinkGEXF2();
+		String path = getServletContext().getRealPath("/") + "grafoInicial.gexf";		
+		FileSinkGEXF out = new FileSinkGEXF();
 		out.writeAll(sim.getGraphManager().getGraph(), path);
 		
 		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
@@ -403,10 +325,10 @@ public class BigMarketServlet extends HttpServlet {
 		AttributeColumn col = attributeModel.getNodeTable().getColumn(GraphDistance.CLOSENESS);
 		System.out.println(col);
 		SortedMap<Integer, Double> close = new TreeMap<Integer, Double>(java.util.Collections.reverseOrder());
-		for(Node n : graphModel.getGraph().getNodes()) {
-			 Double centrality = (Double)n.getNodeData().getAttributes().getValue(col.getTitle());
-			 System.out.println("Node " + n.getId() + " closeness " + centrality);
-			 close.put(n.getId(), centrality);
+		for(Node a : graphModel.getGraph().getNodes()) {
+			 Double centrality = (Double)a.getNodeData().getAttributes().getValue(col.getTitle());
+			 System.out.println("Node " + a.getId() + " closeness " + centrality);
+			 close.put(a.getId(), centrality);
 		}
 		
 		request.setAttribute("close", close);
@@ -419,139 +341,16 @@ public class BigMarketServlet extends HttpServlet {
 	}
 	
 	
-	private void clickExport(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		String path = Constants.GRAPH_PATH;
-		FileSinkGEXF2 out = new FileSinkGEXF2();
-		out.writeAll(sim.getGraphManager().getGraph(), path);
-		System.out.println("SE ESCRIBE EN " + Constants.GRAPH_PATH);
-		
-		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
-		pc.newProject();
-		System.out.println("PROJECT CONTROLLER CREADO");
-		Workspace workspace = pc.getCurrentWorkspace();
-		System.out.println("WORKSPACE CREADO");
-		
-		ImportController importController = Lookup.getDefault().lookup(ImportController.class);
-		System.out.println("IMPORT CONTROLLER CREADO");
-		Container container;
-		try{javax.swing.JFileChooser jF1= new javax.swing.JFileChooser();
-		String ruta = "";
-		try{
-		if(jF1.showSaveDialog(null)==jF1.APPROVE_OPTION){
-		ruta = jF1.getSelectedFile().getAbsolutePath();
-		//Aqui ya tiens la ruta,,,ahora puedes crear un fichero n esa ruta y escribir lo k kieras...
+	
+	private void exportGraphGEXF(){
+		String path = getServletContext().getRealPath("/") + "grafoInicial.gexf";
+		FileSinkGEXF file = new FileSinkGEXF();
+		try {
+			file.writeAll(sim.getGraphManager().getGraph(), path);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		}catch (Exception ex){
-		ex.printStackTrace();
-		} 
-			File file = new File(Constants.GRAPH_PATH);
-			container = importController.importFile(file);
-			container.getLoader().setEdgeDefault(EdgeDefault.DIRECTED);
-			container.setAllowAutoNode(false);
-		}catch(Exception ex) {
-			ex.printStackTrace();
-			return;
-		}
-		
-		
-		
-		importController.process(container,new DefaultProcessor(), workspace);
-		GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getModel();
-		
-		
-		ExportController ec = Lookup.getDefault().lookup(ExportController.class);
-		GraphExporter exporter = (GraphExporter) ec.getExporter("gexf");     //Get GEXF exporter
-        exporter.setExportVisible(true);  //Only exports the visible (filtered) graph
-        exporter.setWorkspace(workspace);
-        String path2 = Constants.GRAPH1_PATH;
-        try {
-            ec.exportFile(new File(Constants.GRAPH1_PATH), exporter);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return;
-        }
-        
-        try {
-			System.out.println("PUNTO 1");
-            // Url con la foto
-            URL url = new URL(
-                    Constants.GRAPH_PATH);
-            
-			System.out.println("PUNTO 2");
-
-            // establecemos conexion
-            URLConnection urlCon = url.openConnection();
-            
-			System.out.println("PUNTO 3");
- 
-            // Sacamos por pantalla el tipo de fichero
-            System.out.println(urlCon.getContentType());
-			System.out.println("PUNTO 4");
- 
-            // Se obtiene el inputStream de la foto web y se abre el fichero
-            // local.
-            InputStream is = urlCon.getInputStream();
-            FileOutputStream fos = new FileOutputStream(Constants.GRAPH_PRUEBA_PATH);
- 
-            // Lectura de la foto de la web y escritura en fichero local
-            byte[] array = new byte[1000]; // buffer temporal de lectura.
-            int leido = is.read(array);
-            while (leido > 0) {
-                fos.write(array, 0, leido);
-                leido = is.read(array);
-            }
- 
-            // cierre de conexion y fichero.
-            is.close();
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
 	}
-	
-	
-//	private void clickExport(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-//		String path = "/home/dlara/Gitted/WebContent/g.gexf";
-//		FileSinkGEXF2 out = new FileSinkGEXF2();
-//		out.writeAll(sim.getGraphManager().getGraph(), path);
-//		
-//		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
-//		pc.newProject();
-//		Workspace workspace = pc.getCurrentWorkspace();
-//		
-//		ImportController importController = Lookup.getDefault().lookup(ImportController.class);
-//		Container container;
-//		try{
-//			File file = new File("/home/dlara/Gitted/WebContent/g.gexf");
-//			container = importController.importFile(file);
-//			container.getLoader().setEdgeDefault(EdgeDefault.DIRECTED);
-//			container.setAllowAutoNode(false);
-//		}catch(Exception ex) {
-//			ex.printStackTrace();
-//			return;
-//		}
-//		
-//		importController.process(container,new DefaultProcessor(), workspace);
-//		GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getModel();
-//		
-//		
-//		ExportController ec = Lookup.getDefault().lookup(ExportController.class);
-//		GraphExporter exporter = (GraphExporter) ec.getExporter("gexf");     //Get GEXF exporter
-//        exporter.setExportVisible(true);  //Only exports the visible (filtered) graph
-//        exporter.setWorkspace(workspace);
-//        String path2 = "/home/dlara/Gitted/WebContent/g1.gexf";
-//        try {
-//            ec.exportFile(new File("/home/dlara/Gitted/WebContent/g1.gexf"), exporter);
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//            return;
-//        }
-//		request.setAttribute("file", path2);
-//		request.getRequestDispatcher("network.html").forward(request, response);
-//	}
-	
 	
 	public int getBroadUsers(Simulation sim){
 		int result = 0;
@@ -592,63 +391,6 @@ public class BigMarketServlet extends HttpServlet {
 		return result;
 	}
 	
-	protected void doGetA(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter(Constants.BUTTON_PRESSED) != null){
-			if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.RUN_ONE_STEP)){	
-				clickRunOneStep(request, response);
-			}else if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.RUN)){
-				clickRun(request, response);
-			}else if(request.getParameter(Constants.BUTTON_PRESSED).equals(Constants.PAUSE)){
-				clickPause(request, response);
-			}else{
-				clickStop(request, response);
-			}
-		}else if(request.getParameter(Constants.ACTION_SELECTED) != null){
-			if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SEE_NETWORK)){
-				clickSeeNetwork(request, response);
-			}else if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SEE_RESULTS)){
-				String[] r = request.getParameterValues("resu");
-				List<String> results = Arrays.asList(r); 
-				if(results.contains(Constants.BETWEENNESS) && results.contains(Constants.CLOSENESS)){
-					calculateBetweenness(request, response);
-					calculateCloseness(request, response);
-					request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
-				}else if(results.contains(Constants.BETWEENNESS) && !results.contains(Constants.CLOSENESS)){
-					calculateBetweenness(request, response);
-					request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
-				}else if(!results.contains(Constants.BETWEENNESS) && results.contains(Constants.CLOSENESS)){
-					calculateCloseness(request, response);
-					request.getRequestDispatcher(Constants.ACTIONS_PAGE).forward(request, response);
-				}
-			}else if(request.getParameter(Constants.ACTION_SELECTED).equals(Constants.SAVE)){
-//				clickSave(request, response);
-			}else{
-				clickExport(request, response);
-			}
-		
-		}else if(request.getParameter("loadPushed").equals("ok")){
-			System.out.println("HE PULSADO CARGAR");
-			Neo4JManageTool n = new Neo4JManageTool();
-			n.launchLoad(request.getParameter("bbddId"));
-			sim = new Simulation(System.currentTimeMillis());
-			sim.setDataBase(n);
-			sim.setFlag(2);
-			String data = request.getParameter("DataId");
-			sim.setSimDataSet(data);
-			Launcher launcher = new Launcher(sim);
-			launcher.start();
-			
-			request.setAttribute("broadUsers",getBroadUsers(sim));
-			request.setAttribute("acqUsers", getAqUsers(sim));
-			request.setAttribute("oddUsers", getOddUsers(sim));
-			request.setAttribute(Constants.STEPS, sim.schedule.getSteps());
-			request.setAttribute(Constants.SIM, sim);
-			request.getRequestDispatcher(Constants.SETUP_PAGE).forward(request, response);
-		}else{
-			launchSimulation(request, response, 1, "AA");
-		}
-		
-	}
 	
 	protected void doGetB(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String formName = request.getParameter(Constants.FORM_NAME);
@@ -660,15 +402,21 @@ public class BigMarketServlet extends HttpServlet {
 				launchSimulation(request, response, numberOfNodes, randomNetworkName);
 			}else if(radioButtons.equals(Constants.LOAD_SELECTED)){
 				Neo4JManageTool n = new Neo4JManageTool();
-				String datasetIdentifier = request.getParameter(Constants.DATASET_IDENTIFIER);
-				n.launchLoad(datasetIdentifier);
+				n.launchLoad(request.getParameter("datasetIdentifier"));
 				sim = new Simulation(System.currentTimeMillis());
 				sim.setDataBase(n);
 				sim.setFlag(2);
-				String newName = request.getParameter(Constants.NEW_LOAD_NETWORK_NAME);
-				sim.setSimDataSet(newName);
+				String data = request.getParameter("newLoadName");
+				sim.setSimDataSet(data);
 				Launcher launcher = new Launcher(sim);
 				launcher.start();
+				
+				request.setAttribute("broadUsers",getBroadUsers(sim));
+				request.setAttribute("acqUsers", getAqUsers(sim));
+				request.setAttribute("oddUsers", getOddUsers(sim));
+				request.setAttribute(Constants.STEPS, sim.schedule.getSteps());
+				request.setAttribute(Constants.SIM, sim);
+				request.getRequestDispatcher(Constants.RUNNING_PAGE).forward(request, response);
 			}
 		}else if(formName.equals(Constants.RUNNING_FORM_NAME)){
 			String actionSelected = request.getParameter(Constants.ACTION_SELECTED);
