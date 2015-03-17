@@ -60,10 +60,10 @@
             <span class="sr-only">Dropdown menu</span>
             </button>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="betweeness.jsp">Betweeness</a></li>
-              <li><a href="closeness.jsp">Closeness</a></li>
-              <li><a href="ingrade.jsp">Grado Entrada</a></li>
-              <li><a href="outgrade.jsp">Grado Salida</a></li>
+              <li>Betweeness</li>
+              <li>Closeness</li>
+              <li>Grado Entrada</a></li>
+              <li>Grado Salida</li>
             </ul>
           </div>
 
@@ -80,7 +80,7 @@
                 for(i=0;i<betnodes.length;i++){
                 out.print("<tr>");
                 out.print("<td>"+betnodes[i]+"</td>");
-                out.print("<td><"+bet[i]+"></td>");
+                out.print("<td>"+bet[i]+"</td>");
                 out.print("</tr>");
                 }
               %>
