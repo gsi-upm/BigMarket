@@ -85,8 +85,6 @@ import org.graphstream.stream.file.FileSinkGEXF;
 import org.graphstream.stream.file.FileSinkGEXF2;
 import org.openide.util.Lookup;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-
 import scala.collection.immutable.Stream.Cons;
 import simulation.Launcher;
 import simulation.Simulation;
