@@ -5,6 +5,8 @@
 <%@ page import= "simulation.util.Neo4JManageTool" %> 
 <%@ page import= "simulation.util.Constants" %>
 <%@ page import="java.util.SortedMap" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Set" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +34,10 @@
       Double[] bet = (Double[])request.getAttribute("bet");
       int[] betnodes = (int[])request.getAttribute("betnodes");
       SortedMap<Integer, Double> close = (SortedMap<Integer, Double>)request.getAttribute("close");
-      
+      HashMap<Integer, Integer> indegree = (HashMap<Integer, Integer>)request.getAttribute("indegree");
+      HashMap<Integer, Integer> outdegree = (HashMap<Integer, Integer>)request.getAttribute("outdegree");
+      int cota = 1;
+
     %>
     <div class="container">
 
@@ -53,27 +58,10 @@
 
       <div class="row">
         <div class="col-lg-4" id="col-left">
-          <div class="btn-group">
-            <button type="button" class="btn btn-primary">SNA type</button>
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-            <span class="caret"></span>
-            <span class="sr-only">Dropdown menu</span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li>Betweeness</li>
-              <li>Closeness</li>
-              <li>Grado Entrada</a></li>
-              <li>Grado Salida</li>
-            </ul>
-          </div>
-
-
-
-
           <table class="table table-striped" id="scroll">
               <tr>
                 <th>Node</th>
-                <th>Meassure</th>
+                <th>Betweeness</th>
               </tr>
               <%
                 int i=0;
@@ -82,6 +70,64 @@
                 out.print("<td>"+betnodes[i]+"</td>");
                 out.print("<td>"+bet[i]+"</td>");
                 out.print("</tr>");
+                }
+              %>
+          </table>
+
+          <table class="table table-striped" id="scroll">
+              <tr>
+                <th>Node</th>
+                <th>Closeness</th>
+              </tr>
+              <%
+                Set<Integer> nodes=close.keySet();
+                for(int j : nodes){
+                if(close.get(j) <= 1.0){
+                continue;
+                }
+                out.print("<tr>");
+                out.print("<td>"+j+"</td>");
+                out.print("<td>"+close.get(j)+"</td>");
+                out.print("</tr>");
+                }
+              %>
+          </table>
+
+          <table class="table table-striped" id="scroll">
+              <tr>
+                <th>Node</th>
+                <th>In degree</th>
+              </tr>
+              <%
+                Set<Integer> nodesin=indegree.keySet();
+                for(int k : nodesin){
+                if(indegree.get(k) == cota){
+                continue;
+                }
+                out.print("<tr>");
+                out.print("<td>"+k+"</td>");
+                out.print("<td>"+indegree.get(k)+"</td>");
+                out.print("</tr>");
+                }
+              %>
+          </table>
+
+          <table class="table table-striped" id="scroll">
+              <tr>
+                <th>Node</th>
+                <th>Out degree</th>
+              </tr>
+              <%
+                Set<Integer> nodesout=outdegree.keySet();
+                for(int l : nodesout){
+                if(outdegree.get(l) == cota){
+                continue;
+                }
+                out.print("<tr>");
+                out.print("<td>"+l+"</td>");
+                out.print("<td>"+outdegree.get(l)+"</td>");
+                out.print("</tr>");
+                
                 }
               %>
           </table>

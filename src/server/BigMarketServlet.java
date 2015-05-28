@@ -34,21 +34,13 @@
 */
 package server;
 
-import java.io.Console;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -60,32 +52,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.gephi.data.attributes.api.AttributeColumn;
 import org.gephi.data.attributes.api.AttributeController;
 import org.gephi.data.attributes.api.AttributeModel;
-import org.gephi.filters.api.FilterController;
-import org.gephi.filters.api.Query;
-import org.gephi.filters.api.Range;
-import org.gephi.filters.plugin.graph.DegreeRangeBuilder.DegreeRangeFilter;
 import org.gephi.graph.api.GraphController;
 import org.gephi.graph.api.GraphModel;
-import org.gephi.graph.api.GraphView;
 import org.gephi.graph.api.Node;
-import org.gephi.io.exporter.api.ExportController;
-import org.gephi.io.exporter.spi.GraphExporter;
 import org.gephi.io.importer.api.Container;
 import org.gephi.io.importer.api.EdgeDefault;
 import org.gephi.io.importer.api.ImportController;
 import org.gephi.io.processor.plugin.DefaultProcessor;
-import org.gephi.layout.plugin.force.StepDisplacement;
-import org.gephi.layout.plugin.force.yifanHu.YifanHuLayout;
-import org.gephi.layout.plugin.forceAtlas.ForceAtlas;
-import org.gephi.layout.plugin.forceAtlas.ForceAtlasLayout;
 import org.gephi.project.api.ProjectController;
 import org.gephi.project.api.Workspace;
 import org.gephi.statistics.plugin.GraphDistance;
+import org.graphstream.graph.Graph;
 import org.graphstream.stream.file.FileSinkGEXF;
-import org.graphstream.stream.file.FileSinkGEXF2;
 import org.openide.util.Lookup;
 
-import scala.collection.immutable.Stream.Cons;
 import simulation.Launcher;
 import simulation.Simulation;
 import simulation.model.User;
@@ -97,8 +77,7 @@ import simulation.util.Neo4JManageTool;
  * Servlet implementation class BigMarketServlet
  */
 public class BigMarketServlet extends HttpServlet {
-       
-    /**
+     /**
 	 * 
 	 */
 	private static final long serialVersionUID = -7634769531465961909L;
@@ -323,12 +302,19 @@ public class BigMarketServlet extends HttpServlet {
 		AttributeColumn col = attributeModel.getNodeTable().getColumn(GraphDistance.CLOSENESS);
 		System.out.println(col);
 		SortedMap<Integer, Double> close = new TreeMap<Integer, Double>(java.util.Collections.reverseOrder());
+		HashMap <Integer, Integer> outdegree = new HashMap<Integer, Integer>();
+		HashMap <Integer, Integer> indegree = new HashMap<Integer, Integer>();
 		for(Node a : graphModel.getGraph().getNodes()) {
 			 Double centrality = (Double)a.getNodeData().getAttributes().getValue(col.getTitle());
 			 System.out.println("Node " + a.getId() + " closeness " + centrality);
+			 indegree.put(a.getId(), graphModel.getGraph().getEdges(a).toArray().length);
+			 outdegree.put(a.getId(), graphModel.getGraph().getDegree(a));
 			 close.put(a.getId(), centrality);
 		}
-		
+	
+
+		request.setAttribute("outdegree", outdegree);
+		request.setAttribute("indegree", indegree);
 		request.setAttribute("close", close);
 	}
 	
