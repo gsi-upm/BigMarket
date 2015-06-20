@@ -6,7 +6,7 @@
 * BigMarket has been developed by members of the research Group on
 * Intelligent Systems [GSI] (Grupo de Sistemas Inteligentes),
 * acknowledged group by the Technical University of Madrid [UPM]
-* (Universidad Politécnica de Madrid)
+* (Universidad PolitÃ©cnica de Madrid)
 *
 * Authors:
 * Daniel Lara
@@ -40,11 +40,11 @@ package simulation.util;
 
 TweetSim has been developed by members of the research Group on
 Intelligent Systems [GSI] (Grupo de Sistemas Inteligentes),
-acknowledged group by the Universidad Politécnica de Madrid [UPM]
+acknowledged group by the Universidad PolitÃ©cnica de Madrid [UPM]
 (Technical University of Madrid)
 
 Authors:
-Álvaro Carrera 
+Ã�lvaro Carrera 
 Carlos A. Iglesias
 Daniel Lara
 Emilio Serrano
@@ -160,14 +160,17 @@ public class GraphManager {
 		createScaleFreeNetwork(st);
 	}
 	
-	public void runGraphFromDataBase(Statistics st, Neo4JManageTool neo){{
+	public void runGraphFromDataBase(Statistics st, Neo4JDBAccess neo){{
 		createTheViewers();
-		for(int n = 0; n < neo.getNodes().size(); n++){
-			finalGraph.addNode(neo.getNodes().get(n));
+		for(int n = 0; n < neo.getListNodes().size(); n++){
+			finalGraph.addNode(neo.getListNodes().get(n));
 			User user = new User(n, "id" + n, "User" + n);
 		    sim.addUser(user);
 			
 		}
+		System.out.println("Nodos del grafo " + finalGraph.getNodeSet().toString());
+		System.out.println("Hashmap de relaciones " + neo.getRelations().toString());
+		System.out.println("Keyset del hashmap " + neo.getRelations().keySet().toString());
 		for(String s : neo.getRelations().keySet()){
 			finalGraph.addEdge(s, finalGraph.getNode(s), finalGraph.getNode(neo.getRelations().get(s)), true);
 			Edge e = finalGraph.getEdge(s);

@@ -71,6 +71,7 @@ import simulation.Simulation;
 import simulation.model.User;
 import simulation.util.Constants;
 import simulation.util.GraphJSONParser;
+import simulation.util.Neo4JDBAccess;
 import simulation.util.Neo4JManageTool;
 
 /**
@@ -83,7 +84,7 @@ public class BigMarketServlet extends HttpServlet {
 	private static final long serialVersionUID = -7634769531465961909L;
 	
 	private Simulation sim;
-	private Neo4JManageTool neoDB;
+	private Neo4JDBAccess neoDB;
 	private String datasetName;
 
 	/**
@@ -91,7 +92,8 @@ public class BigMarketServlet extends HttpServlet {
      */
     public BigMarketServlet() {
         super();
-        this.neoDB = new Neo4JManageTool();
+//        this.neoDB = new Neo4JManageTool();
+        this.neoDB = new Neo4JDBAccess();
         System.out.println("SERVLET CREATED");
     }
 
@@ -187,7 +189,7 @@ public class BigMarketServlet extends HttpServlet {
 		
 		sim.finish();
 		neoDB.setSim(sim);
-		neoDB.launchDatabaseTool();
+		neoDB.saveInDB();
 		GraphJSONParser g = new GraphJSONParser(sim.getGraphManager().getGraph());
 		String path = getServletContext().getRealPath("/") + "networkGraph.json";
 		g.launchParser(path);
@@ -385,11 +387,12 @@ public class BigMarketServlet extends HttpServlet {
 				String randomNetworkName = request.getParameter(Constants.RANDOM_NETWORK_NAME);	
 				launchSimulation(request, response, numberOfNodes, randomNetworkName);
 			}else if(radioButtons.equals(Constants.LOAD_SELECTED)){
-				Neo4JManageTool n = new Neo4JManageTool();
-				n.launchLoad(request.getParameter("datasetIdentifier"));
+				Neo4JDBAccess n = new Neo4JDBAccess();
+				n.loadFromDB(request.getParameter("dataset"));
+				System.out.println(request.getParameter("dataset"));
 				sim = new Simulation(System.currentTimeMillis());
 				sim.setDataBase(n);
-				sim.setFlag(2);
+				sim.setFlag(3);
 				String data = request.getParameter("newLoadName");
 				sim.setSimDataSet(data);
 				Launcher launcher = new Launcher(sim);

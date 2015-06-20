@@ -6,7 +6,7 @@
 * BigMarket has been developed by members of the research Group on
 * Intelligent Systems [GSI] (Grupo de Sistemas Inteligentes),
 * acknowledged group by the Technical University of Madrid [UPM]
-* (Universidad Politécnica de Madrid)
+* (Universidad PolitÃ©cnica de Madrid)
 *
 * Authors:
 * Daniel Lara
@@ -40,11 +40,11 @@ package simulation.util;
 
 TweetSim has been developed by members of the research Group on
 Intelligent Systems [GSI] (Grupo de Sistemas Inteligentes),
-acknowledged group by the Universidad Politécnica de Madrid [UPM]
+acknowledged group by the Universidad PolitÃ©cnica de Madrid [UPM]
 (Technical University of Madrid)
 
 Authors:
-Álvaro Carrera 
+Ã�lvaro Carrera 
 Carlos A. Iglesias
 Daniel Lara
 Emilio Serrano
@@ -168,8 +168,8 @@ public class EventManager implements Steppable{
 		return events;
 	}
 	
-	public List<Event> loadFromDataBase(Neo4JManageTool neo, List<Event> event){
-		this.numberOfAgents = neo.getNodes().size();
+	public List<Event> loadFromDataBase(Neo4JDBAccess neo, List<Event> event){
+		this.numberOfAgents = neo.getNodes();
 		this.events = event;
 		return events;
 	}
@@ -282,7 +282,7 @@ public class EventManager implements Steppable{
 	}
 	
 	//TODO
-	//Los tweets son generados por los users y añadidos a la lista de eventos pendientes, 
+	//Los tweets son generados por los users y aÃ±adidos a la lista de eventos pendientes, 
 	//cuando se vuelva a ejecutar el siguiente step del eventManager se recorre la lista
 	//y se van generando los eventos contenidos en ella.
 	

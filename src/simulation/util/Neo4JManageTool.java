@@ -104,6 +104,7 @@ public class Neo4JManageTool {
 			System.out.println("NODE " + n.getId());
 			try{
 				String nodePointUrl = this.SERVER_ROOT_URI + "/db/data/node/";
+				System.out.println(nodePointUrl);
 				String dataset = "dataset";
 				HttpClient client = new HttpClient();
 				PostMethod mPost = new PostMethod(nodePointUrl);
@@ -473,6 +474,7 @@ public class Neo4JManageTool {
 //	}
 	
 
+	 
 
 	
 }

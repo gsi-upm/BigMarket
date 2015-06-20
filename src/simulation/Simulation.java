@@ -6,7 +6,7 @@
 * BigMarket has been developed by members of the research Group on
 * Intelligent Systems [GSI] (Grupo de Sistemas Inteligentes),
 * acknowledged group by the Technical University of Madrid [UPM]
-* (Universidad Politécnica de Madrid)
+* (Universidad PolitÃ©cnica de Madrid)
 *
 * Authors:
 * Daniel Lara
@@ -39,11 +39,11 @@ package simulation;
 
 TweetSim has been developed by members of the research Group on
 Intelligent Systems [GSI] (Grupo de Sistemas Inteligentes),
-acknowledged group by the Universidad Politécnica de Madrid [UPM]
+acknowledged group by the Universidad PolitÃ©cnica de Madrid [UPM]
 (Technical University of Madrid)
 
 Authors:
-Álvaro Carrera 
+Ã�lvaro Carrera 
 Carlos A. Iglesias
 Daniel Lara
 Emilio Serrano
@@ -83,6 +83,7 @@ import sim.engine.SimState;
 import simulation.model.User;
 import simulation.util.EventManager;
 import simulation.util.GraphManager;
+import simulation.util.Neo4JDBAccess;
 import simulation.util.Neo4JManageTool;
 import simulation.util.NetworkGrowth;
 import simulation.util.Statistics;
@@ -107,7 +108,7 @@ public class Simulation extends SimState{
 	private GraphManager graphManager;
 	private NetworkGrowth networkGrowth;
 	private Statistics statistics;
-	private Neo4JManageTool neo;
+	private Neo4JDBAccess neo;
 	private int numberOfNodes;
 	private int FLAG;
 	private int GUIFLAG;
@@ -310,11 +311,11 @@ public class Simulation extends SimState{
 		this.simDataSet = d;
 	}
 	
-	public void setDataBase(Neo4JManageTool n){
+	public void setDataBase(Neo4JDBAccess n){
 		this.neo = n;
 	}
 	
-	public Neo4JManageTool getDataBase(){
+	public Neo4JDBAccess getDataBase(){
 		return this.neo;
 	}
 	
